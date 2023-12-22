@@ -1,0 +1,15 @@
+
+<section class="containerUsers">
+    <h1>Lista de usuarios</h1>
+{{#each renUsers}}
+<div class="user">
+<p class="user-title">Nombre: {{firstName}}</p>
+<p class="user-title">Apellido: {{lastName}}</p>
+<p class="user-title">Email: {{email}}</p>
+<p class="user-title">Contraseña: {{password}}</p>
+<p class="user-title">Rol: {{role}}</p>
+<p class="user-title">Carrito: {{cart}}</p>
+</div>
+<br>
+{{/each}}
+</section>

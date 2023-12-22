@@ -1,0 +1,66 @@
+paths:
+  /api/carts/:cid:
+    get:
+      summary: Devuelve el carrito del usuario.
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: El carrito se encontro satisfactoriamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status de la operación
+                  payload:
+                    $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error del servidor. Revisar que la conexión a la base de datos sea consistente.
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del carrito
+        products:
+          type: array
+          description: Array de productos agregados al carrito
+          product:
+            type: object
+            description: Objeto del producto
+            payload:
+              $ref: "#/components/schemas/Product"
+          quantity:
+            type: number
+            description: Cantidad de productos
+
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del producto
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        thumbnail:
+          type: string
+          description: URL de la imagen
+        code:
+          type: string
+          description: Código del producto
+        stock:
+          type: number
+          description: Cantidad de Productos

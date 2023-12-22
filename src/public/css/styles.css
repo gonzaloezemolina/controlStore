@@ -1,0 +1,519 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Bebas";
+}
+
+/*FONTS*/
+@font-face{
+    font-family: "Bebas";
+    src: url(../font/BebasNeue-Regular.ttf);
+}
+
+@font-face{
+    font-family: "Helvetica";
+    src: url(../font/HelveticaNowDisplay-Thin.ttf);
+}
+
+
+
+
+
+body{
+    position: relative;
+    min-height: 100vh;
+}
+
+/*NAVBAR*/
+header{
+    width: 100%;
+    position: fixed;
+}
+
+#navBar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 25px;
+  }
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+    background: linear-gradient(to right, black 65%, rgb(209, 11, 11)0%); 
+}
+
+.red-section {
+    text-align: right;
+    a:hover{
+        color: rgb(5, 5, 5);
+        transition: .5s;
+}
+}
+
+.black-section{
+    a:hover{
+        color: rgb(209, 11, 11);
+        transition: .5s;
+}
+} 
+
+  li{
+    list-style: none;
+  }
+
+  .nav-link{
+    text-decoration: none;
+    padding: 10px;
+    color: white;
+}
+
+
+  /*Footer*/
+
+footer{
+    position: absolute;
+    bottom: 0;
+    background-color: black;
+    color: white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+svg{
+    padding: 5px;
+    cursor: pointer;
+}
+
+.footer-icons{
+    padding: 10px;
+    svg:hover{
+        color: rgb(209, 11, 11);
+        transition: .5s;
+}
+}
+
+h1{
+    padding-top: 25px;
+   color: black;
+   text-align: center;
+   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+
+/*HOME*/
+.homecontainer{
+    padding-top: 70px;
+    text-align: center;    
+    h1{
+        color: white;
+        font-size: 90px;
+        padding-bottom: 10px;
+    }
+    h2{
+        color: white;
+        font-size: 20px;
+        font-family: "Helvetica";
+    }
+    .button-home{
+        padding-top: 30px;
+    }
+}
+
+
+.background-home{
+    height: 100vh;
+    background-color:rgb(10, 10, 10);
+background-image:
+radial-gradient(rgb(248, 11, 11),  rgba(116, 3, 3, 0.1) 2px, transparent 40px),
+radial-gradient(white,  rgba(116, 3, 3, 0.1) 1px, transparent 30px),
+radial-gradient(white, rgba(116, 3, 3, 0.1) 2px, transparent 40px),
+radial-gradient(rgba(255,255,255,.4), rgba(119, 7, 7, 0.1) 2px, transparent 30px);
+background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+}
+
+
+
+.button-home {
+    text-align: center;
+  }
+  
+  .button-home button {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .button-home button a {
+    color: black;
+    text-decoration: none;
+  }
+  
+  .button-home button:hover {
+    background-color: #000000;
+    transition: 4s; /* Cambia el color de fondo cuando el botón se encuentra en estado de "hover" (sobre él) */
+  }
+
+  .button-home a:hover {
+    color: #ffffff;
+    transition: 4s; /* Cambia el color de fondo cuando el botón se encuentra en estado de "hover" (sobre él) */
+  }
+
+
+/*BANNER*/
+.banner{
+    height: 100vh;
+    background-image: url(../img/bannercyber.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+/*Productos*/
+
+.containerProducts{
+    padding-top: 55px;
+    padding-bottom: 70px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    justify-items: center;
+    
+}
+
+.product{
+    padding: 10px;
+}
+
+
+
+.product__img{
+    width: 250px;
+    height: 250px;
+}
+
+.btn-products{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-products{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.price{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.paginationPanel{
+    text-align: center;
+    padding-bottom: 80px;
+    color: black;
+}
+
+
+
+/* Login */
+.login-container{
+    border: 2px black solid;
+    margin-top: 25px;
+    margin-left: 38%;
+    margin-right: 38%;
+    display: block;
+    justify-content: center;
+    height: 50%;
+    border: 2px solid white;
+    border-radius: 10px;
+    background-color: rgb(0, 0, 0);
+    align-items: center;
+    padding: 20px;
+    color: white;
+    a{
+        color: white;
+    }
+}
+
+#titulo-login{
+    color: white;
+}
+
+.background-login{
+    height: 100vh;
+    background-color: rgb(66, 3, 3);
+    background-image: url(../img/noise.png);
+}
+
+#loginicon{
+    color: white;
+}
+
+#loginForm{
+    padding-top: 20px;
+}
+
+.iconenlogin{
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.login-encouragement{
+    padding-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.button-login{
+    cursor: pointer;
+    font-size: 15px;
+    margin-left: 15%;
+    padding-top: 10px;
+    padding-left: 70px;
+    padding-right: 75px;
+    color: rgb(114, 10, 10);
+
+}
+
+.linkto-register{
+    padding-left: 5px;
+}
+
+.linkto-register:hover{
+    text-decoration: underline;
+}
+
+
+
+.inputs-login{
+    margin-left: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    padding-right: 70px;
+    padding-left: 5px;
+}
+
+
+
+/*REGISTRO*/
+.register-container{
+    border: 4px black solid;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 38%;
+    margin-right: 38%;
+    display: block;
+    justify-content: center;
+    background-color: rgb(255, 254, 254);
+    align-items: center;
+    padding: 20px;
+    color: white;
+}
+
+#registerForm{
+    padding-top: 10px;
+}
+
+#titulo-register{
+    color: white;
+}
+
+.background-register{
+    height: 100vh;
+    background-color: rgb(4, 12, 83);
+    background-image: url(../img/noise.png);
+}
+
+#registericon{
+    color: white;
+}
+
+.iconenregister{
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-register{
+    cursor: pointer;
+    font-size: 15px;
+    margin-left: 15%;
+    padding-top: 10px;
+    padding-left: 60px;
+    padding-right: 67px;
+    color: rgb(6, 12, 100);
+}
+
+.linkto-login{
+    margin-left: 30%;
+    color: rgb(0, 0, 0);
+}
+
+
+.linkto-login:hover{
+text-decoration: underline;
+}
+
+
+.inputs-register{
+    margin-left: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    padding-right: 70px;
+    padding-left: 5px;
+}
+
+
+/*PROFILE*/
+.profileContainer{
+    padding-top: 100px;
+}
+
+
+/*CART*/
+.cartIntroduction{
+    padding-top: 70px;
+    padding-bottom: 60px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.cartOptions{
+    padding-top: 60px;
+    text-align: center;
+}
+
+
+/*USUARIOS*/
+.containerUsers{
+    h1{
+        font-size: 40px;
+        padding-bottom: 20px;
+    }
+    padding-top: 70px;
+    padding-bottom: 70px;
+text-align: center;
+}
+
+.user{
+    margin-left: 25%;
+    margin-right: 25%;
+    border: 2px black solid;
+    border-radius: 15px;
+}
+
+
+
+/* Herramientas del Administrador
+.modal-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+    opacity: 0;
+    visibility: hidden;
+    font-family: "Bebas";
+  }
+
+
+  .modal-administrator {
+    position: relative;
+    background-color: white;
+    min-width: 500px;
+    padding: 20px;
+    margin-top: -100%;
+    transition: all 0.5s;
+  }
+
+
+  .modal-administrator h3 {
+    color: rgb(0, 0, 0);
+    padding-bottom: 5px;
+  }
+  
+  .modal-administrator #carritoCerrar {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    border: none;
+    background-color: white;
+  }
+  
+  .modal-administrator #carritoCerrar:hover {
+    cursor: pointer;
+  }
+  
+  .modal-administrator #carritoCerrar:focus {
+    outline: none;
+  }
+   */
+
+
+
+
+
+
+
+/*Ocultar y otras variantes de elementos*/
+.ocultarElemento {
+    visibility: hidden;
+  }
+
+.modal-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-active .modal-carrito {
+    margin-top: 0;
+  }
+
+
+.admin-element{
+    cursor: pointer;
+    position: fixed; 
+  bottom: 0;
+  right: 0;
+  margin: 25px; 
+  background-color:rgb(209, 11, 11); 
+  color: #fff; 
+  padding: 10px; 
+  border-radius: 30px;
+}

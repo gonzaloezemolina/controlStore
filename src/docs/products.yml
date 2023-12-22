@@ -1,0 +1,50 @@
+paths:
+  /api/products:
+    get:
+      summary: Devuelve los productos de la base de datos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los Productos se encontraron satisfactoriamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status de la operacion
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/product"
+        "500":
+          description: Error del servidor. Revisar que la conexión a la base de datos sea consistente.
+
+components:
+  schemas:
+    product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del producto
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        thumbnail:
+          type: string
+          description: URL de la imagen
+        code:
+          type: string
+          description: Código del producto
+        stock:
+          type: number
+          description: Cantidad de Productos

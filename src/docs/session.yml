@@ -1,0 +1,35 @@
+paths:
+  /api/sessions/register:
+    post:
+      summary: Registra un nuevo usuario
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/newUser"
+            responses:
+            "200":
+            description: El usuario se registro correctamente
+            "400":
+            description400: El error del usuario se debe a campos incompletos o que ya esta registrado
+
+components:
+  requestBodies:
+    newUser:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Nombre del usuario
+        lastName:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          description: Email del usuario
+        password:
+          type: string
+          description: Contraseña del usuario

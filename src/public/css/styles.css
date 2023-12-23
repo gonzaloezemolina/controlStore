@@ -190,7 +190,7 @@ background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
 
 .containerProducts{
     padding-top: 55px;
-    padding-bottom: 70px;
+    padding-bottom: 60px;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     justify-items: center;
@@ -226,12 +226,28 @@ background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
     align-items: center;
 }
 
-.paginationPanel{
-    text-align: center;
+.paginationOptions{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding-bottom: 80px;
     color: black;
 }
 
+.numberPage{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.button-paginate{
+    cursor: pointer;
+    background: none;
+    color: white;
+    background-color: red;
+    border:0;
+    font-size: 15px;
+    padding: 10px;
+}
 
 
 /* Login */
@@ -413,6 +429,19 @@ text-decoration: underline;
     text-align: center;
 }
 
+#options-space{
+    padding: 15px;
+}
+
+.button-cartOptions{
+    cursor: pointer;
+    background: none;
+    color: white;
+    background-color: red;
+    border:0;
+    font-size: 15px;
+    padding: 10px;
+}
 
 /*USUARIOS*/
 .containerUsers{

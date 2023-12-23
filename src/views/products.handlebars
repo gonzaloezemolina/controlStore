@@ -7,7 +7,7 @@
 
 
 <section class="containerProducts">
-{{#each renProducts}}
+{{#each products}}
 <div class="product">
 <img class="product__img" src={{thumbnail}} alt="imagen de producto">
 <h3 class="title-products">{{title}}</h3>
@@ -23,6 +23,24 @@
 </div>
 {{/each}}
 </section>
+
+
+
+
+<div class="paginationOptions">
+  {{#if hasPrevPage}}
+    <a href="/products/?page={{prevPage}}&limit={{itemsPerPage}}"><button class="button-paginate">Anterior</button></a>
+  {{/if}}
+
+  <h4 class="numberPage">{{currentPage}}</h4>
+
+  {{#if hasNextPage}}
+    <a href="/products/?page={{nextPage}}&limit={{itemsPerPage}}"><button class="button-paginate">Siguiente</button></a>
+  {{/if}}
+</div>
+
+
+
 
 
 
@@ -48,24 +66,6 @@
     </div> --}}
 
 
-
-
-    <div class="paginationPanel">
-      <p>paginacion en marcha¿?</p>
-  {{#if hasPrevPage}}
-    <a href="/products/?page={{prevPage}}"><button
-        class="btn btn-paginate"
-      >Anterior</button></a>
-  {{/if}}
-
-  <h4 class="page">{{page}}</h4>
-
-  {{#if hasNextPage}}
-    <a href="/products/?page={{nextPage}}"><button
-        class="btn btn-paginate"
-      >Siguiente</button></a>
-  {{/if}}
-</div>
 
 
 

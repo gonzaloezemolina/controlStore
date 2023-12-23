@@ -3,7 +3,6 @@ import express from 'express';
 import winston from 'winston';
 import logger from './utils/logger.js';
 import config from './config/config.js';
-import FileStore  from 'session-file-store';
 import Handlebars from 'Handlebars';
 import session from 'express-session';
 import Store from 'express-session';
@@ -35,7 +34,7 @@ const PORT = config.app.PORT
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/public"))
+app.use(express.static(`${__dirname}/public`))
 app.use(cookieParser());
 app.use(session({
   store: MongoStore.create({
@@ -60,10 +59,8 @@ app.engine(
       handlebars: allowInsecurePrototypeAccess(Handlebars),
     })
   );
-// app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars" )
 app.set("views", __dirname+ "/views")
-
 
 
 
@@ -109,7 +106,7 @@ const swaggerSpecificsOptions = {
       description:"Aplicacion Ecommerce de accesorios de juegos"
     }
   },
-  apis:[`${__dirname}/docs/**/*.yml`]
+  apis:[`${__dirname}/docs/**/*.yml`],
 }
 
 const swaggerSpecification = swaggerJSDoc(swaggerSpecificsOptions)
@@ -118,16 +115,6 @@ app.use("/apidocs",
   swaggerUiExpress.setup(swaggerSpecification)
 );
 
-
-
-//Socket
-const pManagerSocket = new productManager(__dirname + "/json/products.json")
-const socket = new Server(server)
-socket.on("connection", async (socket) => {
-    console.log("client connected, id: ", socket.id);
-    const renProducts = await pManagerSocket.getProducts({});
-    socket.emit("sendProducts", renProducts)
-})
 
 //Mongo
 mongoose.set('strictQuery', false)

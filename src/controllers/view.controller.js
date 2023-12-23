@@ -1,79 +1,42 @@
 import { productService } from "../services/index.js";
-import { cartService } from "../services/index.js";
-import { UserService } from "../services/index.js";
 
+const productsView = async (req, res) => {
+  const pagina = parseInt(req.query.page) || 1;
+  const limite = parseInt(req.query.limit) || 9;
 
-const home = async (req,res) =>{
-    try {
-        return res.render('home')
-    } catch (error) {
-        console.log("Error", error);
+  try {
+    const currentPage = pagina;
+
+    const result = await productService.paginateProducts({}, { page: pagina, limit: limite });
+
+    if (!result || result.docs.length === 0) {
+      return res.status(404).send("No se encontraron productos, estamos trabajando en ello :)");
     }
-}
 
-const login = async (req,res) =>{
-    try {
-        return res.render('login')
-    } catch (error) {
-        console.log("Error", error);
-    }
-}
+    const { docs, totalDocs, totalPages, hasNextPage, hasPrevPage } = result;
 
-const register = async (req,res) =>{
-    try {
-        return res.render('register')
-    } catch (error) {
-        console.log("Error", error);
-    }
-}
+    const nextPage = currentPage + 1;
+    const prevPage = currentPage - 1;
 
-const profile = async (req,res) =>{
-    try {
-        return res.render('profile')
-    } catch (error) {
-        console.log("Error", error);
-    }
-}
+    return res.render('products', {
+      status: "success",
+      products: docs,
+      hasNextPage: hasNextPage,
+      hasPrevPage: hasPrevPage,
+      totalProducts: totalDocs,
+      totalPages: totalPages,
+      currentPage: currentPage,
+      itemsPerPage: limite,
+      nextPage: nextPage,
+      prevPage: prevPage
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).send("Error interno del servidor");
+  }
+};
 
+export default {
+  productsView
+};
 
-
-export default{
-    home,login,register,profile
-}
-//  //Home
-//  this.get('/',['PUBLIC'],async(req,res)=>{
-//     res.render('home')
-//   })
-
-//   //Register
-//   this.get('/register',['NO_AUTH'],async (req,res)=>{
-//     res.render('Register')
-//   })
-
-//   //Login
-//   this.get('/login',['NO_AUTH'],async(req,res)=>{
-//     res.render('login')
-//   })
-
-//   //Profile
-//   this.get('/profile', ['AUTH'], passport.authenticate('jwt', { session: false }), async (req, res) => {
-//     res.render('profile');
-// });
-
-//   //Products
-//   this.get('/products',['PUBLIC'],async(req,res)=>{
-//     const renProducts = await productViewServices.getProducts();
-//     res.render("products", {renProducts})
-//   })
-
-//   //Usuarios
-//   this.get('/users',['ADMIN'],async(req,res)=>{
-//     const renUsers = await userViewServices.getUsers();
-//     res.render("users", {renUsers})
-//   })
-
-//   //Cart
-//   this.get('/cart',['AUTH'],async(req,res) =>{
-//     res.render('cart')
-//   })
-// }

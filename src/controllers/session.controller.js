@@ -26,9 +26,9 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
   try{
     res.clearCookie(config.jwt.COOKIE);
-    return res.redirect('/');
   }catch(error){
     console.log("Error en solicitud:", error);
+    return res.sendError("An error has ocurred during log-out");
   }
 };
 
@@ -38,9 +38,4 @@ const current = async (req, res) => {
 
 
 
-export default {
-  register,
-  login,
-  logout,
-  current,
-};
+export default { register,login,logout,current,};

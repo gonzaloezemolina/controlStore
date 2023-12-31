@@ -1,4 +1,3 @@
-import productModel from "../dao/mongo/models/product.model.js";
 import { productService } from "../services/index.js";
 
 
@@ -11,17 +10,6 @@ const getProducts = async (req, res, next) => {
   }
 };
 
-const paginateProducts = async (req, res) => {
-  const pagina = parseInt(req.query.page) || 1;
-  const limite = parseInt(req.query.limit) || 9;
-
-  try {
-    const products = await productService.paginateProducts({}, { page: pagina, limit: limite });
-    res.json({ status: "success", payload: products });
-  } catch (error) {
-    res.status(500).json({ status: "error", message: error.message });
-  }
-};
 
 const getProductById = async (req, res) => {
   const id = parseInt(req.params.pid);
@@ -77,7 +65,6 @@ const deleteProduct = async (req, res) => {
 export default {
   getProducts,
   getProductById,
-  paginateProducts,
   createProduct,
   updateProduct,
   deleteProduct,

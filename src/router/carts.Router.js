@@ -1,17 +1,19 @@
 import baseRouter from "./base.Router.js";
-import cartManager from "../dao/mongo/modelsManagers/carritosManager.js";
-const cartService = new cartManager();
+import cartsController from "../controllers/carts.controller.js";
+
 class cartRouter extends baseRouter{
   init(){
-    this.get(":cid",["user"],cartService.getCartById)
+    this.get(":cid",["USER"],cartsController.getCartById)
 
-    this.post("/",["admin"],cartService.addCart)
+    this.post("/add/:productId", ["AUTH"], cartsController.addProductToCart)
 
-    this.put(":cid/products/:pid",["NO_AUTH"],cartService.updateCart);
+    this.post("/",["ADMIN"],cartsController.addCart)
 
-    this.put("/products/:pid",["user"],cartService.updateCart)
+    this.put(":cid/products/:pid",["NO_AUTH"],cartsController.updateCart);
 
-    this.delete("/:cid",["admin"],cartService.deleteCart)
+    this.put("/products/:pid",["USER"],cartsController.updateCart)
+
+    this.delete("/:cid",["ADMIN"],cartsController.deleteCart)
   }
 }
 

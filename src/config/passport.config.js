@@ -2,7 +2,7 @@ import passport from "passport";
 import config from "./config.js";
 import auth from "../services/auth.js";
 import { UserService } from "../services/index.js";
-import { cartService } from "../services/index.js";
+import { CartService } from "../services/index.js";
 import { Strategy as LocalStrategy} from "passport-local";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 
@@ -54,14 +54,12 @@ const initializePassportStrategies = () => {
         { usernameField: "email", session: false },
         async (email, password, done) => {
           try {
-            if (
-              email === config.app.ADMIN_EMAIL &&
-              password === config.app.ADMIN_PASSWORD
-            ) {
+            if (email === config.app.ADMIN_EMAIL && password === config.app.ADMIN_PASSWORD) {
               const adminUser = {
-                role: "admin",
                 id: "0",
-                firstName: "admin",
+                firstName: "Administrator",
+                lastName:"CS",
+                role: "admin",
               };
               return done(null, adminUser);
             }

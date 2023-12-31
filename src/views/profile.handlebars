@@ -1,4 +1,25 @@
+
 <section class="profileContainer">
+  {{#if user}}
+    <h1 class="titulo-profile">Bienvenido {{user.firstName}}!</h1>
+    <h2 class="subtitulo-profile">Tu informacion es la siguiente:</h2>
+
+    <section class="containerUserInformation">
+      <div id="profile">
+        <p class="username" id="username">Nombre: {{user.firstName}} {{user.lastName}}</p>
+        <p class="useremail" id="useremail">Email: {{user.email}}</p>
+        <p class="userrol" id="userrol">Rol: {{user.role}}</p>
+      </div>
+    </section>
+  {{else}}
+    <p>No se encontraron datos de usuario.</p>
+  {{/if}}
 </section>
 
-<script src="/js/profile.js"></script>
+<div class="cartOptions">
+    <a href="/products" id="options-space"><button class="button-cartOptions">Ir a la tienda</button></a>
+    <button class="button-cartOptions" id="logout">Log-out</button>
+    <a href="" id="options-space"><button class="button-cartOptions" id="coming">Ver historial</button></a>
+</div>
+
+<script src="/js/logout.js"></script>

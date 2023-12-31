@@ -2,53 +2,56 @@ import cartModel from "../models/cart.model.js";
 
 
 export default class cartManager {
-    getCarts = () =>{
-        return cartModel.find()
-    }
+  getCarts = () => {
+    return cartModel.find();
+  };
 
-    getCartById = (params) => {
-        return cartModel.findOne(params)
-    }
+  getCartById = (params) => {
+    return cartModel.findById(params);
+  };
 
-    addCart = (newCart) => {
-        return cartModel.create(newCart)
-    }
+  addCart = (newCart) => {
+    return cartModel.create(newCart);
+  };
 
-    updateCart = (id,carrito) => {
-        return cartModel.updateOne({_id:id},{$set:carrito})
-    }
+  updateCart = (id, cart) => {
+    return cartModel.updateOne({ _id: id }, { $set: cart });
+  };
 
-     addProductToCart = async (cartId, productId, quantity) => {
-        try {
-          const cart = await cart.findById(cartId);
-      
-          if (!cart) {
-            throw new Error('Cart not found');
-          }
-          const existingItem = cart.items.find(item => item.product.equals(productId));
-      
-          if (existingItem) {
-            existingItem.quantity += quantity;
-          } else {
-            cart.items.push({ product: productId, quantity });
-          }
-          await cart.save();
-      
-          return cart;
-        } catch (error) {
-          throw error;
-        }
+  // Añade el producto al carrito
+  addProductToCart = async (cartId, productId, quantity) => {
+    try {
+      const cart = await cartModel.findById(cartId);
+
+      if (!cart) {
+        throw new Error('No se encontró el carrito');
       }
-   
 
-    removeProductFromCart = (cid, pid) => {
-        return cartModel.updateOne(
-          { _id: cid },
-          { $pull: { products: { _id: pid } } }
-        );
-      };
+      const existingItem = cart.products.find((item) => item.product.equals(productId));
 
-    deleteCart = (id) => {
-        return cartModel.deleteOne({_id:id})
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        cart.products.push({ product: productId, quantity });
+      }
+
+      await cart.save();
+
+      return cart;
+    } catch (error) {
+      console.error('Error al agregar producto al carrito:', error);
+      throw error;
     }
+  };
+
+  removeProductFromCart = (cartId, productId) => {
+    return cartModel.updateOne(
+      { _id: cartId },
+      { $pull: { products: { product: productId } } }
+    );
+  };
+
+  deleteCart = (id) => {
+    return cartModel.deleteOne({ _id: id });
+  };
 }

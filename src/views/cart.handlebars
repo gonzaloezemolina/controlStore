@@ -6,12 +6,20 @@
 </div>
 
 <section class="cartContainer">
+  {{#each cart.products}}
     <div>
-        <h4>Producto:</h4>
-        <h4>Cantidad:</h4>
-        <h4>Total::</h4>
+      <h4>{{this.title}}</h4>
+      <p>Cantidad: {{this.quantity}}</p>
+      <p>Total: ${{this.total}}</p>
     </div>
+  {{/each}}
 </section>
+
+<div class="cartSummary">
+  <h3>Resumen del carrito</h3>
+  <p>Total general: ${{cart.total}}</p>
+  <!-- Otros detalles del resumen del carrito -->
+</div>
 
 
 

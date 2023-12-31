@@ -13,10 +13,9 @@ import sessionRouter from './router/session.Router.js';
 import { allowInsecurePrototypeAccess } from '@handlebars/allow-prototype-access';
 import cartRouter from "./router/carts.Router.js"
 import __dirname from "./utils.js"
-import { Server } from 'socket.io';
 import cors from 'cors'
 import ExpressHandlebars from 'express-handlebars';
-import productManager from './dao/mongo/modelsManagers/productosManager.js';
+import { Server } from 'socket.io';
 import mongoose from 'mongoose';
 import MongoStore from 'connect-mongo';
 import initializePassportStrategies from './config/passport.config.js';
@@ -68,7 +67,7 @@ app.set("views", __dirname+ "/views")
 app.use("/",viewRouter)
 app.use("/api/sessions", sessionRouter);
 app.use("/api",productsRouter);
-app.use("/api",cartRouter)
+app.use("/api/cart",cartRouter)
 app.use("/api/users", userRouter);
 
 
@@ -78,6 +77,19 @@ const server = app.listen(PORT, () =>{
     console.log(`Server HTTP is listening on PORT ${server.address().port}`);
 })
 server.on("error", error => console.log(`Error en el servidor ${error}`))
+
+//Web Socket
+const io = new Server(server);
+
+io.on("connection", async (socket) => {
+  console.log("Cliente conectado", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log(`Usuario ${socket.id} desconectado `);
+  });
+});
+
+
 
 
 app.use((req,res,next) =>{

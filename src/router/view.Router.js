@@ -1,9 +1,7 @@
 import baseRouter from "./base.Router.js";
 import passport from "passport";
-import productManager from "../dao/mongo/modelsManagers/productosManager.js";;
 import viewController from "../controllers/view.controller.js";
 import userManager from "../dao/mongo/modelsManagers/userManager.js";
-const productViewServices = new productManager();
 const userViewServices = new userManager();
 
 class ViewRouter extends baseRouter{
@@ -26,16 +24,15 @@ class ViewRouter extends baseRouter{
 
     //Profile
     this.get('/profile', ['AUTH'], passport.authenticate('jwt', { session: false }), async (req, res) => {
+      res.locals.user = req.user;
       res.render('profile');
   });
 
     //Products
-    // this.get('/products',['PUBLIC'],async(req,res)=>{
-    //   const renProducts = await productViewServices.getProducts();
-    //   res.render("products", {renProducts})
-    // })
-
     this.get("/products", ["PUBLIC"], viewController.productsView);
+
+    //Real time products
+    this.get("/realtimeproducts",["ADMIN"], viewController.realTimeProducts)
 
     //Usuarios
     this.get('/users',['ADMIN'],async(req,res)=>{

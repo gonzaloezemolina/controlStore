@@ -7,6 +7,9 @@ const productsView = async (req, res) => {
   try {
     const currentPage = pagina;
 
+    const user = req.user;
+    const isAdmin = user && user.role === 'admin';
+
     const result = await productService.paginateProducts({}, { page: pagina, limit: limite });
 
     if (!result || result.docs.length === 0) {
@@ -17,7 +20,7 @@ const productsView = async (req, res) => {
 
     const nextPage = currentPage + 1;
     const prevPage = currentPage - 1;
-
+    console.log("isAdmin:", isAdmin);
     return res.render('products', {
       status: "success",
       products: docs,
@@ -28,15 +31,29 @@ const productsView = async (req, res) => {
       currentPage: currentPage,
       itemsPerPage: limite,
       nextPage: nextPage,
-      prevPage: prevPage
+      prevPage: prevPage,
+      isAdmin: isAdmin  
     });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).send("Error interno del servidor");
   }
+
+
 };
 
+//Real time products
+const realTimeProducts = async (req,res) =>{
+  try {
+        const listaProductos = await productService.getProducts();
+        return res.render("realtimeproducts", {listaProductos})
+  } catch (error) {
+    console.log("Error realTimeProducts render", error);
+  }
+}
+
 export default {
-  productsView
+  productsView,
+  realTimeProducts
 };
 

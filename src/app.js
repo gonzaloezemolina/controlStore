@@ -37,7 +37,7 @@ app.use(express.static(`${__dirname}/public`))
 app.use(cookieParser());
 app.use(session({
   store: MongoStore.create({
-    mongoUrl:"mongodb+srv://gonzaloezemolina:gonzalo2013@cluster0.n8ds0sl.mongodb.net/ecommerce?retryWrites=true&w=majority",
+    mongoUrl: config.mongo.URL,
     // mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
     ttl:15000
   }),

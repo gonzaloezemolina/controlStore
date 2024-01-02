@@ -43,17 +43,16 @@ const productsView = async (req, res) => {
 };
 
 //Real time products
-const realTimeProducts = async (req,res) =>{
+const productCreator = async (req,res) =>{
   try {
-        const listaProductos = await productService.getProducts();
-        return res.render("realtimeproducts", {listaProductos})
+        return res.render("productCreator")
   } catch (error) {
-    console.log("Error realTimeProducts render", error);
+    console.log("Se ha producido un error en vista ProductCreator", error);
   }
 }
 
 export default {
   productsView,
-  realTimeProducts
+  productCreator
 };
 

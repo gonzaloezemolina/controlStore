@@ -1,3 +1,5 @@
 node_modules
 fileSystem
 package-lock.json
+.env.dev
+.env.prod

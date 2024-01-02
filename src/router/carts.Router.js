@@ -3,17 +3,23 @@ import cartsController from "../controllers/carts.controller.js";
 
 class cartRouter extends baseRouter{
   init(){
-    this.get(":cid",["USER"],cartsController.getCartById)
+    this.get(":cid",["USER","ADMIN"],cartsController.getCartById)
 
-    this.post("/add/:productId", ["AUTH"], cartsController.addProductToCart)
+    this.put(":cid/products/:pid", ["NO_AUTH"], cartsController.addProductToCart);
 
-    this.post("/",["ADMIN"],cartsController.addCart)
+    this.post("/products/:pid", ["USER", "ADMIN"], cartsController.addProductToCart);
+
+    this.post("/",["USER"],cartsController.CreateCart)
 
     this.put(":cid/products/:pid",["NO_AUTH"],cartsController.updateCart);
 
     this.put("/products/:pid",["USER"],cartsController.updateCart)
 
     this.delete("/:cid",["ADMIN"],cartsController.deleteCart)
+
+    this.delete("/:cid",["USER"],cartsController.deleteTotalProduct);
+
+    this.get('/cart/:cid', cartsController.showCart);
   }
 }
 

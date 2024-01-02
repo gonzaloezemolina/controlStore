@@ -31,8 +31,8 @@ class ViewRouter extends baseRouter{
     //Products
     this.get("/products", ["PUBLIC"], viewController.productsView);
 
-    //Real time products
-    this.get("/realtimeproducts",["ADMIN"], viewController.realTimeProducts)
+    //Product creator
+    this.get("/productCreator",["ADMIN"], viewController.productCreator)
 
     //Usuarios
     this.get('/users',['ADMIN'],async(req,res)=>{

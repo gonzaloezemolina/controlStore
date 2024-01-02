@@ -66,8 +66,8 @@ app.set("views", __dirname+ "/views")
 //Rutas
 app.use("/",viewRouter)
 app.use("/api/sessions", sessionRouter);
-app.use("/api",productsRouter);
-app.use("/api/cart",cartRouter)
+app.use("/api/products",productsRouter);
+app.use("/api/carts",cartRouter)
 app.use("/api/users", userRouter);
 
 

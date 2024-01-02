@@ -22,10 +22,10 @@ const schema = new mongoose.Schema({
     },
     thumbnail:{
         type: String,
-        required: true
+        required: false
     },
     code:{
-        type:Number,
+        type:String,
         required: true
     },
     stock:{

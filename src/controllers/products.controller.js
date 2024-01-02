@@ -23,20 +23,42 @@ const getProductById = async (req, res) => {
   }
 };
 
-const createProduct = async (req, res) => {
+const createProduct = async (req, res, next) => {
   try {
-    const product = await productService.createProduct(req.body);
+    const { title, description, code, price, stock, thumbnail } =
+      req.body;
+    if (!title || !description || !code || !price || !stock ) {
+      return res.status(400).json({ message: "Error! product not created" });
+    }
+
+    const newProduct = {
+      title,
+      description,
+      code,
+      price,
+      stock,
+    };
+
+
+    // Agrego thumbnail al objeto newProduct si está presente en la solicitud
+    if (thumbnail !== undefined) {
+      newProduct.thumbnail = thumbnail;
+    }
+
+
+    const product = await productService.createProduct(newProduct);
+
     if (product === "The insert code already exists") {
-      res.status(400).json({ message: "Error al crear el producto", product });
+      return res.status(400).json({ message: "Error! product not created" });
     } else if (product === "Complete all fields") {
-      res.status(400).json({ message: "Error al crear el producto", product });
+      return res.status(400).json({ message: "Error! product not created" });
     } else {
-      res.status(201).json({ message: "Producto creado", product });
+      return res.status(201).json({ message: "Product created", product });
     }
   } catch (error) {
-    throw new error("Error al crear el producto", error);
+    console.log("Otro error mas", error);
   }
-};
+}
 
 const updateProduct = async (req, res) => {
   const id = parseInt(req.params.pid);

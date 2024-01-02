@@ -1,10 +1,10 @@
-import ticketModel from "./models/ticket.model.js";
+import ticketModel from "../models/ticket.model.js";
 
 export default class ticketManager {
   getTickets = (params) => {
     return ticketModel.find(params).lean();
   };
-  getTicketsBy = (params) => {
+  getTicketsById = (params) => {
     return ticketModel.findOne(params).lean();
   };
 

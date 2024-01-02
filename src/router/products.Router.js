@@ -8,6 +8,9 @@ class productsRouter extends baseRouter{
     //Paginate
     this.get("/", ["PUBLIC"], productsController.paginateProducts);
 
+    this.post("/", ["ADMIN"], productsController.createProduct);
+
+
     //All Products
     this.get("/",["PUBLIC"],async(req,res)=>{
       const productos = await productsController.getProducts();

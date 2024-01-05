@@ -34,6 +34,9 @@ class ViewRouter extends baseRouter{
     //Product creator
     this.get("/productCreator",["ADMIN"], viewController.productCreator)
 
+    //Realtimeproducts
+    this.get("/realtimeproducts",["ADMIN"], viewController.realTimeProducts)
+
     //Usuarios
     this.get('/users',['ADMIN'],async(req,res)=>{
       const renUsers = await userViewServices.getUsers();
@@ -41,9 +44,7 @@ class ViewRouter extends baseRouter{
     })
 
     //Cart
-    this.get('/cart',['AUTH'],async(req,res) =>{
-      res.render('cart')
-    })
+    this.get("/cart",["AUTH"], viewController.cart)
   }
 }
 

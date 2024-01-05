@@ -26,16 +26,12 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
   try{
     res.clearCookie(config.jwt.COOKIE);
+    res.json({ success: true, message: 'Logout exitoso' });
   }catch(error){
-    console.log("Error en solicitud:", error);
-    return res.sendError("An error has ocurred during log-out");
+    console.error("Error en solicitud:", error);
+    return res.status(500).send("An error has ocurred during log-out");
   }
 };
 
-const current = async (req, res) => {
-  return res.sendSuccessWithPayload(req.user);
-};
 
-
-
-export default { register,login,logout,current,};
+export default { register,login,logout,};

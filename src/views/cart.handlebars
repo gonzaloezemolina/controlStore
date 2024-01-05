@@ -6,19 +6,28 @@
 </div>
 
 <section class="cartContainer">
-  {{#each cart.products}}
-    <div>
-      <h4>{{this.title}}</h4>
-      <p>Cantidad: {{this.quantity}}</p>
-      <p>Total: ${{this.total}}</p>
-    </div>
-  {{/each}}
+{{#if cart.products.length}}
+    <ul>
+      {{#each cart}}
+        <li>
+          <strong>{{this.productName}}</strong>
+          <p>Precio: ${{this.productPrice}}</p>
+          <p>Cantidad: {{this.quantity}}</p>
+          <form action="/api/carts/products/{{this.productId}}" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Eliminar del carrito</button>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>El carrito está vacío.</p>
+  {{/if}}
 </section>
 
 <div class="cartSummary">
   <h3>Resumen del carrito</h3>
   <p>Total general: ${{cart.total}}</p>
-  <!-- Otros detalles del resumen del carrito -->
 </div>
 
 
@@ -29,43 +38,5 @@
     {{!-- Analizar boton de finalizar compra  --}}
 </div>
 
-
-{{!-- The code below doesn't belongs to me --}}
-{{!-- 
-<div class="container">
-  <h1 class="title">Carrito de compras</h1>
-</div>
-
-<div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Nombre</th>
-        <th scope="col">Descripción</th>
-        <th scope="col">Categoría</th>
-        <th scope="col">Stock</th>
-        <th scope="col">Precio</th>
-        <th scope="col">Cantidad</th>
-        <th scope="col">Subtotal</th>
-      </tr>
-    </thead>
-    <tbody id="cartContainer">
-
-    </tbody>
-  </table>
-</div>
-<div class="btnContainer">
-  <a href="/products"><input
-      class="btn btn-primary btn-a"
-      type="submit"
-      value="Seguir comprando"
-    /></a>
-  <a href="/purchase"><input
-      class="btn btn-success btn-a"
-      type="submit"
-      value="Finalizar compra"
-      id="purchaseBtn"
-    /></a>
-</div> --}}
 
 <script src="/js/cart.js"></script>

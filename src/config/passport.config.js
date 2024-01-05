@@ -33,7 +33,7 @@ const initializePassportStrategies = () => {
             if (req.cookies["cart"]) {
               cart = req.cookies["cart"];
             } else {
-              const cartResult = await cartService.createCart();
+              const cartResult = await CartService.createCart();
               cart = cartResult.id;
             }
             newUser.cart = cart;
@@ -59,6 +59,7 @@ const initializePassportStrategies = () => {
                 id: "0",
                 firstName: "Administrator",
                 lastName:"CS",
+                email:"admincs@gmail.com",
                 role: "admin",
               };
               return done(null, adminUser);
@@ -90,6 +91,9 @@ const initializePassportStrategies = () => {
         async (payload, done) => {
           console.log("Received JWT Token:", payload);  
           try {
+            if (payload.role === "admin") {
+              return done(null, payload);
+            }
             const user = await UserService.getUserById({ _id: payload.id });
             console.log("User from JWT:", user);
             return done(null, user);

@@ -9,7 +9,7 @@ class cartRouter extends baseRouter{
 
     this.post("/products/:pid", ["USER", "ADMIN"], cartsController.addProductToCart);
 
-    this.post("/",["USER"],cartsController.CreateCart)
+    this.post("/",["USER"],cartsController.createCart)
 
     this.put(":cid/products/:pid",["NO_AUTH"],cartsController.updateCart);
 
@@ -19,7 +19,6 @@ class cartRouter extends baseRouter{
 
     this.delete("/:cid",["USER"],cartsController.deleteTotalProduct);
 
-    this.get('/cart/:cid', cartsController.showCart);
   }
 }
 

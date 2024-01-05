@@ -2,47 +2,23 @@
 const obj = {};
 console.log("Cadena de datos antes de la solicitud:", JSON.stringify(obj));
 
-// function addToCart(cart,id) {
-//     // Realiza una solicitud al servidor para agregar el producto al carrito
-//     fetch(`/api/carts/${cart}/products/${id}`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(obj),
-//     })
-//     .then(response => response.json())
-//     .then(result => {
-//       console.log('Producto agregado al carrito:', result);
-//       Toastify({
-//         text: "Se añadio producto al carrito",
-//         duration: 3000,
-//         destination: "/cart",
-//         newWindow: false,
-//         close: true,
-//         gravity: "bottom", // `top` or `bottom`
-//         position: "left", // `left`, `center` or `right`
-//         stopOnFocus: true, // Prevents dismissing of toast on hover
-//         style: {
-//           background: "linear-gradient(to right,  black 50%, rgb(209, 11, 11))",
-//         },
-//         onClick: function(){} // Callback after click
-//       }).showToast();
-//     })
-//     .catch(error => console.error('Error al agregar al carrito:', error));
-//   }
-  
 async function addToCart(id) {
   const cart = getCookie("cart");
+  console.log("Valor de la cookie 'cart':", cart);
+  const quantity = 1; // O obtén la cantidad de alguna manera
+  console.log('Quantity:', quantity); // Agrega esta línea para verificar la cantidad
+
   if (cart) {
     const response = await fetch(`/api/carts/${cart}/products/${id}`, {
-      method: "PUT",
+      method: "POST",
+      body: JSON.stringify({ quantity })
     });
     const result = await response.json();
   } else {
     //si no encontro la cookie, es porque ya hay un usuario logueado
     const response = await fetch(`/api/carts/products/${id}`, {
       method: "POST",
+      body: JSON.stringify({ quantity })
     });
     const result = await response.json();
     console.log(result);
@@ -62,8 +38,6 @@ async function addToCart(id) {
             onClick: function(){} // Callback after click
           }).showToast();
         }
-
-
 
 
 function getCookie(name) {

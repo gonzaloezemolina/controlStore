@@ -28,7 +28,6 @@ class SessionsRouter extends baseRouter {
 
     this.get("/logout", ["AUTH"], sessionController.logout);
 
-    this.get("/current", ["AUTH"], sessionController.current);
   }
 }
 

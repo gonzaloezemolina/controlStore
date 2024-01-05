@@ -1,22 +1,65 @@
 import cartModel from "../models/cart.model.js";
 
 export default class cartManager {
-  getCartById = async (params, options = {}) => {
-    if (options.populate) {
-      return cartModel.findOne(params).populate("products.product");
-    }
-    return cartModel.findOne(params).lean();
-  };
+
+  getCartById = async (userId) => {
+    const cart = await cartModel.findOne({userId})
+    return cart
+  }
+
 
   createCart = () => {
-    return cartModel.create({ products: [], populate: true });
+    return cartModel.create({ products: []});
   };
 
-  updateCart = (cid, cart) => {
-    return cartModel.updateOne({ _id: cid }, { $set: cart });
+  updateCart = (userId, cart) => {
+    return cartModel.updateOne({ _id: userId }, { $set: cart });
   };
 
   deleteCart = (id) => {
     return cartModel.updateOne({ _id: id }, { $set: { products: [] } });
   };
+
+
+  addProductToCart = async (userId, productId, quantity) => {
+    try {
+      let cart = await cartModel.findOne({ userId });
+
+      if (!cart) {
+          cart = new cartModel({userId,products: [{ productId, quantity }],});
+      } else {
+        const existingProductIndex = cart.products.findIndex(
+          (product) => product.productId.toString() === productId.toString()
+        );
+
+        if (existingProductIndex !== -1) {
+          cart.products[existingProductIndex].quantity += quantity;
+        } else {
+          cart.products.push({ productId, quantity });
+        }
+      }
+      await cart.save();
+      return cart;
+    } catch (error) {
+      throw new Error('Error addProductToCart', error);
+    }
+  }
+
+
+  deleteProductFromCart = async (userId, productId) => {
+    try {
+      const cart = await cartModel.findOne({userId})
+      if (cart) {
+        cart.products = cart.products.filter(
+          (product) => product.productId.toString() !== productId.toString()
+        );
+
+        await cart.save();
+        return cart;
+      }
+    } catch (error) {
+      console.log("Error deleteProductFromCart", error);
+    }
+  }
+
 }

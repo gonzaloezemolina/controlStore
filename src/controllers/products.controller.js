@@ -6,7 +6,7 @@ const getProducts = async (req, res, next) => {
     const products = await productService.getProducts({});
     res.status(200).json({ status: "success", payload: products });
   } catch (error) {
-    res.status(500).json({ status: "error", message: error.message });
+    res.status(500).json({ status: "error", message: error});
   }
 };
 
@@ -23,6 +23,8 @@ const getProductById = async (req, res) => {
   }
 };
 
+
+//CreateProduct
 const createProduct = async (req, res, next) => {
   try {
     const { title, description, code, price, stock, thumbnail } =
@@ -40,7 +42,6 @@ const createProduct = async (req, res, next) => {
     };
 
 
-    // Agrego thumbnail al objeto newProduct si está presente en la solicitud
     if (thumbnail !== undefined) {
       newProduct.thumbnail = thumbnail;
     }
@@ -60,6 +61,8 @@ const createProduct = async (req, res, next) => {
   }
 }
 
+
+//UpdateProduct
 const updateProduct = async (req, res) => {
   const id = parseInt(req.params.pid);
   const product = await productService.updateProduct(id, req.body);
@@ -70,6 +73,8 @@ const updateProduct = async (req, res) => {
   }
 };
 
+
+//DeleteProduct
 const deleteProduct = async (req, res) => {
   const id = parseInt(req.params.pid);
   const product = await productService.deleteProduct(id);

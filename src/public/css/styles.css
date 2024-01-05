@@ -578,3 +578,32 @@ text-align: center;
         border: 0;
     }
   }
+
+
+/*logout*/
+#logout{
+    cursor: pointer;
+}
+
+/*PRODUCT EDITOR*/
+
+.EditProductForm{
+    width: 100%;
+    .editInputs{
+        display: flex;
+        width: 80%;
+    }
+    .confirmEdit{
+        background: 0;
+        background-color: white;
+        border: 0;
+        margin-top: 20px;
+        padding: 10px;
+        width: 80%;
+        cursor: pointer;
+        color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

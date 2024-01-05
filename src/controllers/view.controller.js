@@ -1,4 +1,4 @@
-import { productService } from "../services/index.js";
+import { productService, CartService } from "../services/index.js";
 
 const productsView = async (req, res) => {
   const pagina = parseInt(req.query.page) || 1;
@@ -42,7 +42,7 @@ const productsView = async (req, res) => {
 
 };
 
-//Real time products
+//ProductCreator
 const productCreator = async (req,res) =>{
   try {
         return res.render("productCreator")
@@ -51,8 +51,32 @@ const productCreator = async (req,res) =>{
   }
 }
 
+//Realtimeproducts
+const realTimeProducts = async (req, res) => {
+  try {
+    const productos = await productService.getProducts();
+    return res.render('realtimeproducts', { productos });
+  } catch (error) {
+    console.error('Error en realTimeProducts:', error);
+    res.status(500).send('Error interno del servidor');
+  }
+};
+
+//cartView
+const cart = async (req,res) => {
+  try {
+    const getCart = await CartService.getCartById()
+    return res.render("cart", {getCart})
+  } catch (error) {
+    console.log("Error renderizando vista Cart", error);
+  }
+}
+
+
 export default {
   productsView,
-  productCreator
+  productCreator,
+  realTimeProducts,
+  cart
 };
 

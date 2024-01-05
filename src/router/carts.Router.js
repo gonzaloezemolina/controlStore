@@ -5,9 +5,9 @@ class cartRouter extends baseRouter{
   init(){
     this.get(":cid",["USER","ADMIN"],cartsController.getCartById)
 
-    this.put(":cid/products/:pid", ["NO_AUTH"], cartsController.addProductToCart);
+    this.put(":cid/products/:pid", ["NO_AUTH"], cartsController.addProduct);
 
-    this.put("/products/:pid", ["USER", "ADMIN"], cartsController.addProductToCart);
+    this.put("/products/:pid", ["USER", "ADMIN"], cartsController.addProduct);
 
     this.post("/",["USER"],cartsController.createCart)
 

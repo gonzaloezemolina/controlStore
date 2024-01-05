@@ -3,21 +3,16 @@ console.log("Cadena de datos antes de la solicitud:", JSON.stringify(obj));
 
 async function addToCart(id) {
   const cart = getCookie("cart");
-  console.log("Valor de la cookie 'cart':", cart);
-  const quantity = 1; // O obtén la cantidad de alguna manera
-  console.log('Quantity:', quantity); // Agrega esta línea para verificar la cantidad
 
   if (cart) {
     const response = await fetch(`/api/carts/${cart}/products/${id}`, {
       method: "PUT",
-      body: JSON.stringify({ quantity })
     });
     const result = await response.json();
   } else {
     //si no encontro la cookie, es porque ya hay un usuario logueado
     const response = await fetch(`/api/carts/products/${id}`, {
       method: "PUT",
-      body: JSON.stringify({ quantity })
     });
     const result = await response.json();
     console.log(result);

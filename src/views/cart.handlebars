@@ -10,7 +10,7 @@
     <ul>
       {{#each cart}}
         <li>
-          <strong>{{this.productName}}</strong>
+          <strong>{{this.product.title}}</strong>
           <p>Precio: ${{this.productPrice}}</p>
           <p>Cantidad: {{this.quantity}}</p>
           <form action="/api/carts/products/{{this.productId}}" method="POST">

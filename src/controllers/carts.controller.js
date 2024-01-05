@@ -1,6 +1,5 @@
 import { CartService, productService, TicketService, UserService } from "../services/index.js";
 
-
 //GetCartById
 const getCartById = async (req, res) => {
   const userId = req.params.userId;
@@ -51,100 +50,53 @@ const deleteCart = async (req, res) => {
 
 
 // Add product to cart
-const addProductToCart = async (req, res) => {
+const addProduct = async (req, res, next) => {
   try {
-    const userId = req.user._id; // Obtén el ID del usuario autenticado
-    const user = await UserService.getUserById(userId);
-
-    if (!user) {
-      throw new Error(`No se encontró el usuario con ID ${userId}`);
+    const { cid, pid, quantity } = req.params;
+    const product = await productService.getProductById({
+      _id: req.params.pid,
+    });
+    let cart;
+    if (cid) {
+      cart = await CartService.getCartById({ _id: cid });
+    } else {
+      cart = await CartService.getCartById({ _id: req.user.cart });
     }
+    const quantityAdd = quantity ? quantity : 1;
 
-    const cartId = user.cart; // Obtén el ID del carrito asociado al usuario
+    if (cart && product) {
+      if (req.user.role === "PREMIUM" && product.owner === req.user.id) {
+        return res
+          .status(403)
+          .send({ status: "error", message: "Cannot add own product to cart" });
+      }
 
-    // Llamar al servicio de carrito para agregar el producto al carrito existente
-    const productId = req.params.productId;
-    const quantity = req.body.quantity;
-    const updatedCart = await CartService.addProductToCart(cartId, productId, quantity);
+      let arrayProducts = await cart.products;
+      let positionProduct = arrayProducts.findIndex(
+        (product) => product.product._id == pid
+      );
 
-    res.json(updatedCart);
+      if (positionProduct != -1) {
+        arrayProducts[positionProduct].quantity =
+          arrayProducts[positionProduct].quantity + quantityAdd;
+      } else {
+        arrayProducts.push({ product: pid, quantity: quantityAdd });
+      }
+
+      await CartService.updateCart(
+        { _id: cart._id },
+        { products: arrayProducts }
+      );
+      return res.send({ status: "success", message: "Added successfully" });
+    } else {
+      return res
+        .status(404)
+        .send({ status: "error", message: "Product or Cart not found" });
+    }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error aca ", error)
   }
-
-
-  // const userCart = req.user.cart;
-  // const productId = req.params.pid;
-  // const quantity = req.body.quantity;
-
-
-  // console.log('userCart:', userCart);
-  //   console.log('productId:', productId);
-  //   console.log('quantity:', quantity);
-  //   console.log(typeof req.user.cart);
-  // try {
-  //   // Realiza la lógica para agregar el producto al carrito usando cartService
-  //   const cart = await CartService.addProductToCart(userCart, productId, quantity);
-  //   res.json(cart);
-  // } catch (error) {
-  //   res.status(500).json({ error: error.message });
-  // }
 };
-
-
-
-
-// const addProductToCart = async (req, res, next) => {
-//   try {
-//     const { cid, pid, quantity } = req.params;
-//     const product = await productService.getProductById({
-//       _id: req.params.pid,
-//     });
-//     let cart;
-//     if (cid) {
-//       cart = await CartService.getCartById({ _id: cid });
-//     } else {
-//       cart = await CartService.getCartById({ _id: req.user.cart });
-//     }
-//     const quantityAdd = quantity ? quantity : 1;
-
-//     if (cart && product) {
-//       if (req.user.role === "PREMIUM" && product.owner === req.user.id) {
-//         return res
-//           .status(403)
-//           .send({ status: "error", message: "Cannot add own product to cart" });
-//       }
-
-//       let arrayProducts = await cart.products;
-//       let positionProduct = arrayProducts.findIndex(
-//         (product) => product.product._id == pid
-//       );
-
-//       if (positionProduct != -1) {
-//         arrayProducts[positionProduct].quantity =
-//           arrayProducts[positionProduct].quantity + quantityAdd;
-//       } else {
-//         arrayProducts.push({ product: pid, quantity: quantityAdd });
-//       }
-
-//       await CartService.updateCart(
-//         { _id: cart._id },
-//         { products: arrayProducts }
-//       );
-//       return res.send({ status: "success", message: "Added successfully" });
-//     } else {
-//       return res
-//         .status(404)
-//         .send({ status: "error", message: "Product or Cart not found" });
-//     }
-//   } catch (error) {
-//     console.log("Error en cart Controller, addProduct", error);
-//   }
-// };
-
-
-
-
 
 
 
@@ -264,7 +216,7 @@ export default {
   deleteCart,
   deleteProduct,
   deleteTotalProduct,
-  addProductToCart,
+  addProduct,
   updateProduct,
-  updateCart
+  updateCart,
 };

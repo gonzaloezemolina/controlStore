@@ -7,7 +7,7 @@ class cartRouter extends baseRouter{
 
     this.put(":cid/products/:pid", ["NO_AUTH"], cartsController.addProductToCart);
 
-    this.post("/products/:pid", ["USER", "ADMIN"], cartsController.addProductToCart);
+    this.put("/products/:pid", ["USER", "ADMIN"], cartsController.addProductToCart);
 
     this.post("/",["USER"],cartsController.createCart)
 
@@ -18,7 +18,6 @@ class cartRouter extends baseRouter{
     this.delete("/:cid",["ADMIN"],cartsController.deleteCart)
 
     this.delete("/:cid",["USER"],cartsController.deleteTotalProduct);
-
   }
 }
 

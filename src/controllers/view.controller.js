@@ -65,8 +65,7 @@ const realTimeProducts = async (req, res) => {
 //cartView
 const cart = async (req,res) => {
   try {
-    const getCart = await CartService.getCartById()
-    return res.render("cart", {getCart})
+    return res.render("cart")
   } catch (error) {
     console.log("Error renderizando vista Cart", error);
   }

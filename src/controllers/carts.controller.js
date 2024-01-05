@@ -1,5 +1,4 @@
-import cartService from "../services/cart.Service.js";
-import { CartService, productService, TicketService } from "../services/index.js";
+import { CartService, productService, TicketService, UserService } from "../services/index.js";
 
 
 //GetCartById
@@ -53,25 +52,43 @@ const deleteCart = async (req, res) => {
 
 // Add product to cart
 const addProductToCart = async (req, res) => {
-
-
-
-  const userCart = req.user.cart;
-  const productId = req.params.pid;
-  const quantity = req.body.quantity;
-
-
-  console.log('userId:', userCart);
-    console.log('productId:', productId);
-    console.log('quantity:', quantity);
-
   try {
-    // Realiza la lógica para agregar el producto al carrito usando cartService
-    const cart = await CartService.addProductToCart(userCart, productId, quantity);
-    res.json(cart);
+    const userId = req.user._id; // Obtén el ID del usuario autenticado
+    const user = await UserService.getUserById(userId);
+
+    if (!user) {
+      throw new Error(`No se encontró el usuario con ID ${userId}`);
+    }
+
+    const cartId = user.cart; // Obtén el ID del carrito asociado al usuario
+
+    // Llamar al servicio de carrito para agregar el producto al carrito existente
+    const productId = req.params.productId;
+    const quantity = req.body.quantity;
+    const updatedCart = await CartService.addProductToCart(cartId, productId, quantity);
+
+    res.json(updatedCart);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+
+
+  // const userCart = req.user.cart;
+  // const productId = req.params.pid;
+  // const quantity = req.body.quantity;
+
+
+  // console.log('userCart:', userCart);
+  //   console.log('productId:', productId);
+  //   console.log('quantity:', quantity);
+  //   console.log(typeof req.user.cart);
+  // try {
+  //   // Realiza la lógica para agregar el producto al carrito usando cartService
+  //   const cart = await CartService.addProductToCart(userCart, productId, quantity);
+  //   res.json(cart);
+  // } catch (error) {
+  //   res.status(500).json({ error: error.message });
+  // }
 };
 
 

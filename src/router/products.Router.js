@@ -19,7 +19,7 @@ class productsRouter extends baseRouter{
    
 
   //Delete product
-  this.delete('/:pid',['ADMIN'],async (req,res)=>{
+  this.delete('/:pid',['PUBLIC'],async (req,res)=>{
       const {pid} = req.params;
       const result = await productsController.deleteProduct(pid);
       res.send({status:"success",message:"Product Deleted"})

@@ -1,4 +1,3 @@
-//Cart 
 const obj = {};
 console.log("Cadena de datos antes de la solicitud:", JSON.stringify(obj));
 
@@ -10,14 +9,14 @@ async function addToCart(id) {
 
   if (cart) {
     const response = await fetch(`/api/carts/${cart}/products/${id}`, {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify({ quantity })
     });
     const result = await response.json();
   } else {
     //si no encontro la cookie, es porque ya hay un usuario logueado
     const response = await fetch(`/api/carts/products/${id}`, {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify({ quantity })
     });
     const result = await response.json();
@@ -45,7 +44,6 @@ function getCookie(name) {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
-
 
 document.addEventListener("DOMContentLoaded", function () {
     const adminElement = document.getElementById("adminElement");

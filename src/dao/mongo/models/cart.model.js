@@ -6,7 +6,7 @@ const productSubSchema = new mongoose.Schema(
   {
     product: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "products", //Reference to the products collection
+      ref: "products",
     },
     quantity: {
       type: Number,
@@ -18,6 +18,10 @@ const productSubSchema = new mongoose.Schema(
 
 const schema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "users",
+    },
     products: {
       type: [productSubSchema],
       default: [],

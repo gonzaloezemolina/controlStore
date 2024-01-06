@@ -5,13 +5,7 @@ import sessionController from "../controllers/session.controller.js";
 
 class SessionsRouter extends baseRouter {
   init() {
-    this.post("/register",["PUBLIC"],
-    (req,res,next) =>{
-      console.log("Executing /register route");
-      next()
-    },
-      passportCall("register", { strategyType: "LOCALS" }),sessionController.register
-    );
+    this.post("/register",["PUBLIC"],(req,res,next) =>{console.log("Executing /register route");next()},passportCall("register", { strategyType: "LOCALS" }),sessionController.register);
 
     this.post(
       "/login",

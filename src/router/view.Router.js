@@ -15,7 +15,7 @@ class ViewRouter extends baseRouter{
     //Register
     this.get('/register',['NO_AUTH'],async (req,res)=>{
       try {
-      res.render('Register')
+      res.render('register')
       } catch (error) {
         console.error("Error obteniendo vista register", error)
         res.status(500).json({ message: 'Error interno del servidor' });

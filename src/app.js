@@ -4,13 +4,14 @@ import winston from 'winston';
 import viewController from './controllers/view.controller.js';
 import logger from './utils/logger.js';
 import config from './config/config.js';
-import Handlebars from 'Handlebars';
 import session from 'express-session';
 import Store from 'express-session';
+import handlebars from "express-handlebars";
 import cookieParser from 'cookie-parser';
 import viewRouter from "./router/view.Router.js"
 import productsRouter from "./router/products.Router.js"
 import sessionRouter from './router/session.Router.js';
+import Handlebars from 'handlebars';
 import { allowInsecurePrototypeAccess } from '@handlebars/allow-prototype-access';
 import cartRouter from "./router/carts.Router.js"
 import __dirname from "./utils.js"
@@ -57,11 +58,11 @@ app.use(session({
 
 //Handlebars
 app.engine(
-    'handlebars',
-    ExpressHandlebars.engine({
-      handlebars: allowInsecurePrototypeAccess(Handlebars),
-    })
-  );
+  'handlebars',
+  ExpressHandlebars.engine({
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
+  })
+);
 app.set("view engine", "handlebars" )
 app.set("views", __dirname+ "/views")
 

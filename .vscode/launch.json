@@ -18,8 +18,8 @@
                 "MONGO_URL": "mongodb+srv://gonzaloezemolina:gonzalo2013@cluster0.n8ds0sl.mongodb.net/ecommerce?retryWrites=true&w=majority",
                 "JWT_COOKIE": "authCookie",
                 "JWT_SECRET": "jwtSecret",
-                "ADMIN_EMAIL": "correoadmin@correo.com",
-                "ADMIN_PASSWORD": "123",
+                "ADMIN_EMAIL": "admincs@gmail.com",
+                "ADMIN_PASSWORD": "control1010",
                 "PORT": "8080",
             }
         }

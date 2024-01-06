@@ -18,6 +18,7 @@ class ViewRouter extends baseRouter{
       res.render('Register')
       } catch (error) {
         console.error("Error obteniendo vista register", error)
+        res.status(500).json({ message: 'Error interno del servidor' });
       }
     })
 

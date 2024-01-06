@@ -65,7 +65,7 @@ const addProduct = async (req, res, next) => {
     const quantityAdd = quantity ? quantity : 1;
 
     if (cart && product) {
-      if (req.user.role === "PREMIUM" && product.owner === req.user.id) {
+      if (req.user.role === "ADMIN" && product.owner === req.user.id) {
         return res
           .status(403)
           .send({ status: "error", message: "Cannot add own product to cart" });
@@ -99,6 +99,97 @@ const addProduct = async (req, res, next) => {
 };
 
 
+const purchaseCart = async (req, res, next) => {
+  try {
+    const { cid } = req.params;
+    const user = req.user;
+    let productPurchase = [];
+    let productNotPurchased = [];
+
+    try {
+      const cart = await CartService.getCartById({ _id: cid });
+      if (!cart) {
+        return res.status(404).send({
+          status: "error",
+          message: "Cart not found",
+        });
+      }
+
+      if (req.user.role === "PREMIUM") {
+        const userProducts = cart.products.filter(
+          (item) => item.product.owner === req.user.id
+        );
+
+        if (userProducts.length > 0) {
+          return res.status(403).send({
+            status: "error",
+            message: "Cannot purchase own products",
+          });
+        }
+      }
+
+      for (const item of cart.products) {
+        const product = await productService.getProductById(item.product._id);
+        if (!product) {
+          productNotPurchased.push(item);
+          continue;
+        }
+
+        if (item.quantity > product.stock) {
+          productNotPurchased.push(item);
+          continue;
+        }
+
+        product.stock -= item.quantity;
+        await productService.updateProduct(
+          { _id: product._id },
+          { stock: product.stock }
+        );
+
+        productPurchase.push(item);
+      }
+    } catch (error) {
+      return res.status(500).send({
+        status: "error",
+        message: "An error occurred while processing the purchase",
+      });
+    }
+
+    const total = productPurchase.reduce(
+      (acc, item) => acc + item.product.price * item.quantity,
+      0
+    );
+    const amount = total.toFixed(2);
+
+    const codeTicket = Date.now().toString(15);
+
+    const newTicket = {
+      code: codeTicket,
+      amount: amount,
+      purchase_datetime: new Date().toISOString(),
+      purchaser: user.email,
+      products: productPurchase,
+    };
+
+    try {
+      await TicketService.createTicket(newTicket);
+      if (productNotPurchased.length > 0) {
+        await CartService.updateCart(
+          { _id: cid },
+          { products: productNotPurchased }
+        );
+      }
+    } catch (error) {
+      return res.status(500).send({
+        status: "error",
+        message: "An error occurred while processing the purchase",
+      });
+    } 
+  } catch{
+    console.log("Error function purchaseCart", error);
+  }
+}  
+    
 
 
 
@@ -210,6 +301,7 @@ const deleteTotalProduct = async (req, res, next) => {
 
 
 
+
 export default {
   getCartById,
   createCart,
@@ -219,4 +311,5 @@ export default {
   addProduct,
   updateProduct,
   updateCart,
+  purchaseCart
 };

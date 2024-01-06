@@ -1,4 +1,6 @@
-import { productService, CartService } from "../services/index.js";
+import { productService} from "../services/index.js";
+import { findCartByUserId } from "../utils/associatingCart.js";
+import { calculateCartTotal } from "../utils/associatingCart.js";
 
 const productsView = async (req, res) => {
   const pagina = parseInt(req.query.page) || 1;
@@ -65,7 +67,11 @@ const realTimeProducts = async (req, res) => {
 //cartView
 const cart = async (req,res) => {
   try {
-    return res.render("cart")
+    const userId = req.user._id;
+    const cart = await findCartByUserId(userId);
+     const total = calculateCartTotal(cart);
+     cart.total = total;
+    return res.render("cart", { cart });
   } catch (error) {
     console.log("Error renderizando vista Cart", error);
   }

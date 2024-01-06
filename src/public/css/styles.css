@@ -461,6 +461,16 @@ text-decoration: underline;
     padding: 10px;
 }
 
+.button-cartBuy{
+    cursor: pointer;
+    background: none;
+    color: white;
+    background-color: red;
+    border:0;
+    font-size: 15px;
+    padding: 10px;
+}
+
 /*USUARIOS*/
 .containerUsers{
     h1{
@@ -585,6 +595,7 @@ text-align: center;
     cursor: pointer;
 }
 
+
 /*PRODUCT EDITOR*/
 
 .EditProductForm{
@@ -606,4 +617,38 @@ text-align: center;
         justify-content: center;
         align-items: center;
     }
+}
+
+
+
+/*CARRITOO*/
+
+.cartInformationContainer{
+    padding-bottom: 100px;
+}
+
+.cartSummary{
+    padding-top: 15px;
+    text-align: center;
+}
+
+.listInCart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .prodInCart{
+        padding-right: 10px;
+    }
+}
+
+.productInCart__img{
+    height: 200px;
+    width: 200px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+
+.emptyCart{
+    text-align: center;
 }

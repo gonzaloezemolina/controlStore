@@ -18,6 +18,8 @@ class cartRouter extends baseRouter{
     this.delete("/:cid",["ADMIN"],cartsController.deleteCart)
 
     this.delete("/:cid",["USER"],cartsController.deleteTotalProduct);
+
+    this.post("/:cid/purchase",["USER"],cartsController.purchaseCart);
   }
 }
 

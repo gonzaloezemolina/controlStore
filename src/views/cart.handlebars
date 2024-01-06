@@ -5,38 +5,43 @@
 </svg>
 </div>
 
-<section class="cartContainer">
-{{#if cart.products.length}}
-    <ul>
-      {{#each cart}}
-        <li>
-          <strong>{{this.product.title}}</strong>
-          <p>Precio: ${{this.productPrice}}</p>
-          <p>Cantidad: {{this.quantity}}</p>
-          <form action="/api/carts/products/{{this.productId}}" method="POST">
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit">Eliminar del carrito</button>
-          </form>
-        </li>
-      {{/each}}
-    </ul>
-  {{else}}
-    <p>El carrito está vacío.</p>
-  {{/if}}
-</section>
+<section class="cartInformationContainer">
 
-<div class="cartSummary">
+{{#if cart}}
+  <ul>
+    {{#each cart.products}}
+      <li class="listInCart">
+        <strong class="prodInCart">{{this.product.title}}</strong>
+        <p>Precio: ${{this.product.price}}</p>
+        <img class="productInCart__img" src={{this.product.thumbnail}} alt="imagen de producto">
+        <p class="prodInCart">Cantidad: {{this.quantity}}</p>
+        <form action="/api/carts/products/{{this.product._id}}" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit">Eliminar del carrito</button>
+        </form>
+      </li>
+      <hr>
+    {{/each}}
+  </ul>
+  <div class="cartSummary">
   <h3>Resumen del carrito</h3>
   <p>Total general: ${{cart.total}}</p>
 </div>
-
+{{else}}
+  <p class="emptyCart">El carrito está vacío.</p>
+{{/if}}
 
 
 <div class="cartOptions">
     <a href="/products" id="options-space"><button class="button-cartOptions">Volver a la tienda</button></a>
-    <a href="/purchase" id="options-space"><button class="button-cartOptions">Finalizar compra</button></a>
-    {{!-- Analizar boton de finalizar compra  --}}
+    <a  id="options-space"><button class="button-cartBuy" onclick="comprarButton{{cart_id}}">Comprar</button></a>
 </div>
+</section>
+
+
+
+
+
 
 
 <script src="/js/cart.js"></script>

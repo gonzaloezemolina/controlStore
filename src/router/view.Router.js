@@ -14,7 +14,11 @@ class ViewRouter extends baseRouter{
 
     //Register
     this.get('/register',['NO_AUTH'],async (req,res)=>{
+      try {
       res.render('Register')
+      } catch (error) {
+        console.error("Error obteniendo vista register", error)
+      }
     })
 
     //Login

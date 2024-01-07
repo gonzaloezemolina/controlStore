@@ -25,8 +25,4 @@ export default {
     COOKIE: process.env.JWT_COOKIE,
     SECRET: process.env.JWT_SECRET || "jwtSecret",
   },
-  mailer: {
-    USER: process.env.NODE_MAILER_USER,
-    PASS: process.env.NODE_MAILER_PASSWORD,
-  }
 };

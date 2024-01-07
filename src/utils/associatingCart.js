@@ -44,13 +44,16 @@ export const findCartByUserId = async (userId) => {
   }
 
   export const calculateCartTotal = (cart) => {
-    if (!cart || !cart.products) {
-      return 0;
+    if (cart && cart.products) {
+      const total = cart.products.reduce((acc, cartItem) => {
+        if (cartItem.product && cartItem.quantity) {
+          return acc + (cartItem.product.price * cartItem.quantity);
+        }
+        return acc;
+      }, 0);
+  
+      return total;
     }
   
-    const total = cart.products.reduce((acc, product) => {
-      return acc + (product.price * product.quantity);
-    }, 0);
-  
-    return total;
+    return 0;
   };

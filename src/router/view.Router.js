@@ -50,6 +50,9 @@ class ViewRouter extends baseRouter{
 
     //Cart
     this.get("/cart",["AUTH"], viewController.cart)
+
+    //Purchase
+    this.get("/purchase", ["AUTH"], viewController.purchase)
   }
 }
 

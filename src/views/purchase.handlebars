@@ -1,0 +1,35 @@
+<section class="buy-details">
+    <h1>Detalles de compra</h1>
+    {{!-- <p><strong>Código del Ticket:</strong> {{ticket.code}}</p>
+    <p><strong>Fecha de Compra:</strong> {{ticket.purchase_datetime}}</p>
+    <p><strong>Comprador:</strong> {{ticket.purchaser}}</p> --}}
+    <article>
+  <div>
+          <p><strong>Usuario:</strong> {{user.firstName}} {{user.lastName}}</p>
+          <p><strong>Email:</strong>{{user.email}}</p>
+    </div>
+   
+    <div class="productsInPayment">
+    <h3>Productos</h3>
+      <ul>
+        {{#each cart.products}}
+            <li>
+                <strong>{{this.product.title}}</strong> -
+                Cantidad: {{this.quantity}} -
+                Precio Unitario: ${{this.product.price}} 
+            </li>
+        {{/each}}
+    </ul>
+    </div>
+    
+
+    <h3>Monto total: ${{cart.total}} </h3>
+    </article>
+  
+</section>
+
+<div class="btnComprar" >
+  <button id="btnComprar">Comprar</button>
+</div>
+
+<script src="/js/purchase.js"></script>

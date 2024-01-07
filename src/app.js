@@ -27,6 +27,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUiExpress from 'swagger-ui-express';
 import userRouter from './router/user.Router.js';
 import { productService } from './services/index.js';
+import purchaseRouter from './router/purchase.Router.js';
 
 
 
@@ -73,6 +74,7 @@ app.use("/",viewRouter)
 app.use("/api/sessions", sessionRouter);
 app.use("/api/products",productsRouter);
 app.use("/api/carts",cartRouter)
+app.use("/api/purchases", purchaseRouter)
 app.use("/api/users", userRouter);
 
 

@@ -7,7 +7,8 @@
 
 <section class="cartInformationContainer">
 
-{{#if cart}}
+<div id="cartList">
+    {{#if cart.products}}
   <ul>
     {{#each cart.products}}
       <li class="listInCart">
@@ -15,18 +16,21 @@
         <p>Precio: ${{this.product.price}}</p>
         <img class="productInCart__img" src={{this.product.thumbnail}} alt="imagen de producto">
         <p class="prodInCart">Cantidad: {{this.quantity}}</p>
-        <form action="/api/carts/products/{{this.product._id}}" method="POST">
-          <input type="hidden" name="_method" value="DELETE">
-          <button type="submit">Eliminar del carrito</button>
-        </form>
+        {{!-- <form action="/api/carts/products/{{this.product._id}}" method="POST"> --}}
+          {{!-- <input type="hidden" name="_method" value="DELETE"> --}}
+          <button class="eliminateProduct" type="submit">Eliminar del carrito</button>
+        {{!-- </form> --}}
       </li>
       <hr>
     {{/each}}
+     <div class="cartSummary">
+      <h3>Resumen del carrito</h3>
+      <p>Total general: ${{cart.total}}</p>
+      </div>
   </ul>
-  <div class="cartSummary">
-  <h3>Resumen del carrito</h3>
-  <p>Total general: ${{cart.total}}</p>
 </div>
+
+  
 {{else}}
   <p class="emptyCart">El carrito está vacío.</p>
 {{/if}}
@@ -34,14 +38,13 @@
 
 <div class="cartOptions">
     <a href="/products" id="options-space"><button class="button-cartOptions">Volver a la tienda</button></a>
-    <a  id="options-space"><button class="button-cartBuy" onclick="comprarButton{{cart_id}}">Comprar</button></a>
+    <a id="options-space"><button id="vaciarCarrito" class="button-cartOptions">Vaciar carrito</button></a>
+    <a href="/purchase"  id="options-space"><button class="button-cartBuy" onclick="comprarButton{{cart_id}}">Finalizar Compra</button></a>
 </div>
 </section>
 
 
 
 
-
-
-
 <script src="/js/cart.js"></script>
+

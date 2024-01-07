@@ -1,6 +1,5 @@
 import { productService} from "../services/index.js";
-import { findCartByUserId } from "../utils/associatingCart.js";
-import { calculateCartTotal } from "../utils/associatingCart.js";
+import { findCartByUserId, calculateCartTotal } from "../utils/associatingCart.js";
 
 const productsView = async (req, res) => {
   const pagina = parseInt(req.query.page) || 1;
@@ -68,12 +67,31 @@ const realTimeProducts = async (req, res) => {
 const cart = async (req,res) => {
   try {
     const userId = req.user._id;
-    const cart = await findCartByUserId(userId);
-     const total = calculateCartTotal(cart);
-     cart.total = total;
-    return res.render("cart", { cart });
+    const userCart = await findCartByUserId(userId); 
+    const total = calculateCartTotal(userCart);
+    userCart.total = total;
+    console.log(userCart.total); 
+    return res.render("cart", { cart: userCart });  
   } catch (error) {
     console.log("Error renderizando vista Cart", error);
+  }
+}
+
+const purchase = async (req,res) =>{
+  try {
+
+    res.locals.user = req.user;
+    const userId = req.user._id;
+    const cart = await findCartByUserId(userId);
+    const total = calculateCartTotal(cart)
+    cart.total = total;
+
+    if (!cart || !cart.products || cart.products.length === 0) {
+      return res.send("No tienes productos en el carrito. Para comprar debes agregar al menos un producto."); 
+    }
+    return res.render("purchase", {cart: cart})
+  } catch (error) {
+   console.log("Error renderizando vista purchase", error); 
   }
 }
 
@@ -82,6 +100,7 @@ export default {
   productsView,
   productCreator,
   realTimeProducts,
-  cart
+  cart,
+  purchase
 };
 

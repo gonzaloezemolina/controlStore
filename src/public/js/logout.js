@@ -17,9 +17,3 @@ async function salir() {
       console.error(error);
     }
   }
-
-
-const soon = document.getElementById("coming");
-soon.addEventListener("click", function () {
-  alert("Esta opción no se encuentra disponible por el momento");
-});

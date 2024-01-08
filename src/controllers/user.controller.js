@@ -36,6 +36,16 @@ const deleteUser = async (req, res) => {
   res.send({ status: "success", message: "User deleted successfully" });
 };
 
+
+
+
+//addTicketToPurchaseHistory
+
+
+
+
+
+
 export default {
   getUsers,
   getUserById,

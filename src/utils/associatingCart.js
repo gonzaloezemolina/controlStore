@@ -1,6 +1,5 @@
 import cartModel from "../dao/mongo/models/cart.model.js";
 import userModel from "../dao/mongo/models/user.model.js";
-import { CartService } from "../services/index.js";
 
 export const findCartByUserId = async (userId) => {
     try {
@@ -30,18 +29,6 @@ export const findCartByUserId = async (userId) => {
 
 
 
-  export const clearCart = async (userId) => {
-    try {
-      const cart = await CartService.getCartById(userId);
-
-      if (cart) {
-        cart.products = []; // Vaciar la lista de productos en el carrito
-        await CartService.updateCart(userId, cart);
-      }
-    } catch (error) {
-      throw new Error('Error al limpiar el carrito', error);
-    }
-  }
 
   export const calculateCartTotal = (cart) => {
     if (cart && cart.products) {

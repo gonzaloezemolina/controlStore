@@ -1,75 +1,75 @@
-import { findCartByUserId, clearCart, calculateCartTotal } from "../utils/associatingCart.js";
-import { productService, TicketService } from "../services/index.js";
+import { findCartByUserId, calculateCartTotal } from "../utils/associatingCart.js";
+import { generarCodigoAleatorio } from "../utils/code.js";
+import { productService, TicketService, UserService, CartService } from "../services/index.js";
 
-const purchase = async (req, res) => {
-  try {
-    console.log("Esto deberia aparecer");
-    const userId = req.user._id;
+const purchaseCart = async (req, res, next) => {
+    try {
+      const userId = req.user._id;
+      const userCart = await findCartByUserId(userId);
+      const total = calculateCartTotal(userCart)
+      userCart.total = total
 
-    // Obtener el carrito del usuario
-    const cart = await findCartByUserId(userId);
 
-    // Verificar si el carrito tiene productos
-    if (!cart || !cart.products || cart.products.length === 0) {
-      return res.status(400).send("No tienes productos en el carrito. Para comprar, agrega al menos un producto.");
-    }
+      const hasSufficientStock = await checkStock(userCart.products);
+      console.log(checkStock);
+      console.log(hasSufficientStock);
 
-    // Restar el stock de los productos y actualizar la base de datos
-    for (const productItem of cart.products) {
-      const product = productItem.product;
-      const newStock = product.stock - productItem.quantity;
-
-      // Verificar si hay suficiente stock
-      if (newStock < 0) {
-        return res.status(400).send(`Stock insuficiente para el producto: ${product.title}`);
+      if (!hasSufficientStock) {
+        return res.status(400).json({ status: 'error', message: 'No hay suficiente stock para completar la compra' });
       }
 
-      // Actualizar el stock del producto en la base de datos
-      await productService.updateProduct(product._id, newStock);
+      // Crea un nuevo ticket
+      const newTicket = await TicketService.createTicket({
+        code: generarCodigoAleatorio(),
+        purchase_datetime: new Date().toISOString(),
+        user: userId,
+        purchaser: req.user.email,
+        products: userCart.products,
+        amount: userCart.total,
+      });
+
+      console.log(newTicket);
+
+      const reducingStock = await reduceStock(userCart.products);
+      console.log(reducingStock);
+      // Agrega el ticket al historial de compras del usuario
+      await UserService.addToPurchaseHistory(userId, newTicket._id);
+
+      // Vacía el carrito del usuario
+      await CartService.updateCart({ _id: userCart._id }, { products: [] });
+
+      return res.redirect('/history'); 
+    } catch (error) {
+      console.error('Error al realizar la compra:', error);
+      return res.status(500).json({ status: 'error', message: 'Error interno del servidor' });
     }
-
-    // Vaciar el carrito del usuario
-    const cleanCart = await clearCart(userId);
-    console.log(cleanCart);
-    // Realizar otras acciones necesarias
-
-    const getTotal = async () => {
-      try {
-        const userCart = await findCartByUserId(userId);
-        const total = calculateCartTotal(userCart);
-        userCart.total = total;
-      } catch (error) {
-        console.log("Error cargando total", error);
-      }
-    };
-
-    const total = await getTotal();
-    const amount = total;
-    const purchaserEmail = req.user.email;
-    const codeTicket = Date.now().toString(15);
-
-    console.log(total);
-
-    const ticketData = {
-      code: codeTicket,
-      amount: amount,
-      purchase_datetime: new Date().toISOString(),
-      purchaser: purchaserEmail,
-      products: cart.products,
-    };
-
-    const createdTicket = await TicketService.createTicket(ticketData);
-    console.log(ticketData);
-    // No renderizamos la vista de confirmación
-
-    // Retornamos una respuesta indicando que la compra fue exitosa
-    return res.status(200).send("¡Gracias por tu compra! Volver a la tienda - Ver historial");
-  } catch (error) {
-    console.log("Error al procesar la compra", error);
-    return res.status(500).send("Error al procesar la compra. Por favor, inténtalo nuevamente.");
   }
-};
+
+async function checkStock(products) {
+  for (const item of products) {
+    const product = await productService.getProductById(item.product._id);
+    if (!product || product.stock < item.quantity) {
+      return false;
+    }
+  }
+  return true;
+}
+
+async function reduceStock(products) {
+  try {
+    for (const item of products) {
+      const productId = item.product._id; 
+      const product = await productService.getProductById(productId); 
+      const newStock = product.stock - item.quantity; 
+      await productService.updateProduct(productId, { stock: newStock }); 
+    }
+    return true; 
+  } catch (error) {
+    console.error('Error al reducir el stock:', error);
+    return false; 
+  }
+}
 
 export default {
-  purchase,
+  purchaseCart,
 };

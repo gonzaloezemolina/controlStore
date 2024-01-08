@@ -22,10 +22,6 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    amount: {
-      type: Number,
-      required: true,
-    },
     products: {
       type: Array,
       default: [],
@@ -34,9 +30,13 @@ const schema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    user: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'users' 
+    },
   },
   {
-    timestamps: true,
+    timestamps: false,
   }
 );
 

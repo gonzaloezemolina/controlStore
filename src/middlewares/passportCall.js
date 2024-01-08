@@ -17,7 +17,6 @@ const passportCall = (strategy, options = {}) => {
           }
           case "JWT": {
             req.user = null;
-            console.log("User after JWT authentication:", req.user); // Agrega este log
             return next();
           }
         }

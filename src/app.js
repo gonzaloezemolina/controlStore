@@ -1,7 +1,6 @@
 //Imports
 import express from 'express';
 import winston from 'winston';
-import viewController from './controllers/view.controller.js';
 import logger from './utils/logger.js';
 import config from './config/config.js';
 import session from 'express-session';
@@ -44,7 +43,6 @@ app.use(cookieParser());
 app.use(session({
   store: MongoStore.create({
     mongoUrl: config.mongo.URL,
-    // mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
     ttl:15000
   }),
     secret: "c0d3rS3cr3t",

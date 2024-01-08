@@ -13,7 +13,12 @@ const schema = new mongoose.Schema({
     cart:{
         type: mongoose.SchemaTypes.ObjectId,
         ref:"carts",
-    }
+    },
+    purchaseHistory:[{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref:"tickets",
+    }]
+    
 });
 const userModel = mongoose.model(collection,schema);
 export default userModel

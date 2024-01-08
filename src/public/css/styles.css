@@ -698,7 +698,14 @@ article{
 
 #btnComprar:hover{
         background-color: rgb(25, 206, 79);
-        color: #fff;
+        color: #ffffff;
         transition: .5s;
 }
 
+
+.history-title{
+    padding-top: 100px;
+    padding-bottom: 40px;
+    font-size: 50px;
+    text-align: center;
+}

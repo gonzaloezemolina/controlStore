@@ -3,7 +3,7 @@ import purchaseController from "../controllers/purchase.controller.js";
 
 class purchaseRouter extends baseRouter{
   init(){
-    this.post("/purchase",["AUTH"],  purchaseController.purchase)
+    this.post("/purchase",["AUTH"],  purchaseController.purchaseCart)
 }
 }
 

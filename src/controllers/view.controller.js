@@ -1,5 +1,6 @@
+import ticketModel from "../dao/mongo/models/ticket.model.js";
 import { productService} from "../services/index.js";
-import { findCartByUserId, calculateCartTotal } from "../utils/associatingCart.js";
+import { findCartByUserId,  calculateCartTotal } from "../utils/associatingCart.js";
 
 const productsView = async (req, res) => {
   const pagina = parseInt(req.query.page) || 1;
@@ -95,12 +96,30 @@ const purchase = async (req,res) =>{
   }
 }
 
+const history = async (req,res) => {
+  try {
+    res.locals.user = req.user;
+    const userArray = req.user.purchaseHistory
+
+    const userHistory = await ticketModel.find({ user: req.user.id });
+
+
+    if (userArray.length === 0) {
+      return res.send("Para ver tu historial debes haber comprado al menos un producto")
+    }
+    return res.render ("history", { user: { purchaseHistory: userHistory }})
+  } catch (error) {
+    console.log("Error renderizando vista history", error);
+  }
+}
+
 
 export default {
   productsView,
   productCreator,
   realTimeProducts,
   cart,
-  purchase
+  purchase,
+  history
 };
 

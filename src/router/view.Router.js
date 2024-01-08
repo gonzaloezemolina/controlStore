@@ -53,6 +53,8 @@ class ViewRouter extends baseRouter{
 
     //Purchase
     this.get("/purchase", ["AUTH"], viewController.purchase)
+
+    this.get("/history", ["AUTH"], viewController.history)
   }
 }
 

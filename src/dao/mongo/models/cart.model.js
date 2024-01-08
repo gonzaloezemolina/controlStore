@@ -8,6 +8,10 @@ const productSubSchema = new mongoose.Schema(
       type: mongoose.SchemaTypes.ObjectId,
       ref: "products",
     },
+    title: {
+      type: String,
+      ref: "products.title",
+    },
     quantity: {
       type: Number,
       default: 1,

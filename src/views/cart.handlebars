@@ -16,10 +16,7 @@
         <p>Precio: ${{this.product.price}}</p>
         <img class="productInCart__img" src={{this.product.thumbnail}} alt="imagen de producto">
         <p class="prodInCart">Cantidad: {{this.quantity}}</p>
-        {{!-- <form action="/api/carts/products/{{this.product._id}}" method="POST"> --}}
-          {{!-- <input type="hidden" name="_method" value="DELETE"> --}}
           <button class="eliminateProduct" type="submit">Eliminar del carrito</button>
-        {{!-- </form> --}}
       </li>
       <hr>
     {{/each}}

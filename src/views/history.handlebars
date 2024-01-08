@@ -3,12 +3,16 @@
 <section class="historyContainer">
     {{#if user.purchaseHistory}}
         {{#each user.purchaseHistory}}
-        <div buyInformation>
+        <div class="buyInformation">
             <hr>
 <p><strong>Orden compra:</strong> {{this.code}}</p>
             <p><strong>Fecha:</strong> {{this.purchase_datetime}}</p>
             <p><strong>Usuario:</strong> {{this.purchaser}}</p>
-            <p><strong>Productos:</strong> {{this.products}} - {{this.products.quantity}}</p>
+            {{#each this.products}}
+          <p><strong>Productos:</strong> {{this.title}}</p>
+          <p><strong>Cantidad:</strong> {{this.quantity}}</p>
+        {{/each}}
+            {{!-- <p><strong>Productos:</strong> {{this.products}} - {{this.products.quantity}}</p> --}}
             <p><strong>Monto:</strong> {{this.amount}}</p>
         </div>
             

@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 Toastify({
                     text: "Gracias por comprar!",
-                    duration: 4000,
+                    duration: 5000,
                     destination: "/history",
                     newWindow: false,
                     close: true,

@@ -81,7 +81,10 @@ const addProduct = async (req, res, next) => {
         arrayProducts[positionProduct].quantity =
           arrayProducts[positionProduct].quantity + quantityAdd;
       } else {
-        arrayProducts.push({ product: pid, quantity: quantityAdd });
+        arrayProducts.push({ 
+          product: pid, 
+          quantity: quantityAdd,
+          title: product.title });
       }
 
       await CartService.updateCart(

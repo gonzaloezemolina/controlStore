@@ -6,7 +6,7 @@ import productsRouter from '../src/router/products.Router.js';
 const expect = chai.expect;
 const api = supertest(app);
 
-describe('Testing ProductsManager', () => {
+describe('Testing ProductsRouter', () => {
   it('Debería obtener todos los productos', async () => {
     const response = await api.get('/api/products');
     expect(response.status).to.equal(200);
@@ -40,14 +40,14 @@ describe('Testing ProductsManager', () => {
       stock: 20,
     };
 
-    const response = await api.put(`/api/products/${productId}`).send(updatedProductData);
+    const response = await api.put(`/api/products/${pid}`).send(updatedProductData);
     expect(response.status).to.equal(200);
   });
 
   it('Debería eliminar un producto existente', async () => {
     expect(productId).to.be.a('string')
 
-    const response = await api.delete(`/api/products/${productId}`);
+    const response = await api.delete(`/api/products/${pid}`);
     expect(response.status).to.equal(200);
   });
 

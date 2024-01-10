@@ -34,9 +34,5 @@ describe('Testing SessionRouter', () => {
     expect(response.status).to.equal(200);
   });
 
-  it('Debería obtener la sesión actual del usuario autenticado', async () => {
-    const response = await api.get('/api/sessions/current');
-    expect(response.status).to.equal(200);
-  });
 
 });

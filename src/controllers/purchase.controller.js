@@ -32,7 +32,6 @@ const purchaseCart = async (req, res, next) => {
 
       const reducingStock = await reduceStock(userCart.products);
       console.log(reducingStock);
-      // Agrega el ticket al historial de compras del usuario
       await UserService.addToPurchaseHistory(userId, newTicket._id);
 
       // Vacía el carrito del usuario

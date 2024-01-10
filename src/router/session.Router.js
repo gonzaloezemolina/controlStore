@@ -7,19 +7,7 @@ class SessionsRouter extends baseRouter {
   init() {
     this.post("/register",["PUBLIC"],(req,res,next) =>{console.log("Executing /register route");next()},passportCall("register", { strategyType: "LOCALS" }),sessionController.register);
 
-    this.post(
-      "/login",
-      ["NO_AUTH"],
-      (req, res, next) => {
-        console.log("Executing /login route");
-        next();
-      },
-      passportCall("login", { strategyType: "LOCALS" }),
-      (req, res) => {
-        console.log("Ruta ejecutada");
-        sessionController.login(req, res);
-      }
-    );
+    this.post("/login",["NO_AUTH"],(req, res, next) => {console.log("Executing /login route");next();},passportCall("login", { strategyType: "LOCALS" }),(req, res) => {console.log("Ruta ejecutada");sessionController.login(req, res);});
 
     this.get("/logout", ["AUTH"], sessionController.logout);
 

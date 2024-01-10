@@ -8,7 +8,7 @@ const getCartById = async (req, res) => {
     const cart = await CartService.getCartById(userId);
     res.json(cart);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 };
 
@@ -18,11 +18,11 @@ const createCart = async (req, res) => {
     const cart = await CartService.createCart();
     res.json(cart);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 };
 
-
+//UpdateCart
 const updateCart = async (req, res) => {
   const userId = req.params.userId;
   const updatedCart = req.body;
@@ -31,10 +31,9 @@ const updateCart = async (req, res) => {
     const result = await CartService.updateCart(userId, updatedCart);
     res.json(result);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 };
-
 
 
 //Delete
@@ -44,10 +43,9 @@ const deleteCart = async (req, res) => {
     const result = await CartService.deleteCart(userId);
     res.json(result);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 };
-
 
 
 // Add product to cart
@@ -98,85 +96,28 @@ const addProduct = async (req, res, next) => {
         .send({ status: "error", message: "Product or Cart not found" });
     }
   } catch (error) {
-    console.error("Error aca ", error)
+    console.error("Error agregando producto ", error)
   }
 };
 
-
-const updateProduct = async (req, res, next) => {
-  try {
-    const { cid, pid, quantity } = req.params;
-
-    const cartId = await CartService.getCartById(cid);
-    const quantityAdd = quantity ? quantity : 1;
-
-    let objCart = await cartId[0];
-    if (objCart) {
-      const productId = await objCart.products.find(
-        (product) => product.product._id == pid
-      );
-      if (productId) {
-        let arrayProducts = await objCart.products;
-        let positionProduct = await arrayProducts.findIndex(
-          (product) => product.product._id == pid
-        );
-
-        arrayProducts[await positionProduct].quantity = quantityAdd;
-        await CartService.updateCart(
-          { _id: cid },
-          { products: arrayProducts }
-        );
-        return res.send({
-          status: "success",
-          message: "Product updated successfully",
-        });
-      } else {
-        return res.send({ status: "error", message: "Product not found" });
-      }
-    } else {
-      return res.send({ status: "error", message: "Cart not found" });
-    }
-  } catch (error) {
-    console.log("Se ha producido un error", error);
-  }
-};
 
 //Delete product from cart
-const deleteProduct = async (req, res, next) => {
+const deleteProductFromCart = async (req, res,) => {
   try {
-    const cartId = await CartService.getCartById(cid);
+    const { pid } = req.params;
+    const userId = req.user._id; 
 
-    let objCart = await cartId[0];
-    if (objCart) {
-      const productId = await objCart.products.find(
-        (product) => product.product._id == pid
-      );
-      if (productId) {
-        let arrayProducts = await objCart.products;
-        let newArrayProducts = await arrayProducts.filter(
-          (product) => product.product._id != pid
-        );
+    const updatedCart = await CartService.deleteProductFromCart(userId, pid);
 
-        if (newArrayProducts) {
-          await CartService.updateCart(
-            { _id: cid },
-            { products: newArrayProducts }
-          );
-          return "Deleted successfully";
-        }
-      } else {
-        return `Product not found`;
-      }
-    } else {
-      return "Cart Not Found";
-    }
-  } catch (error) {
-    console.log("Ha ocurrido un error", error);
-  }
+    res.json({ cart: updatedCart });
+} catch (error) {
+    console.error('Error al eliminar producto del carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+}
 };
 
 
-
+//DeleteAllProducts
 const deleteAllProducts = async (req, res, next) => {
   try {
 
@@ -205,9 +146,8 @@ export default {
   getCartById,
   createCart,
   deleteCart,
-  deleteProduct,
+  deleteProductFromCart,
   deleteAllProducts,
   addProduct,
-  updateProduct,
   updateCart,
 };

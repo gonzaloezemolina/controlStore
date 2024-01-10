@@ -112,6 +112,23 @@ a{
 
 
 /*HOME*/
+
+.title-home{
+    opacity: 0; /* Inicialmente, el h1 estará completamente invisible */
+    animation: fadeIn 2s ease-in-out forwards; 
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Inicia con opacidad 0 (invisible) */
+    }
+
+    to {
+        opacity: 1; /* Termina con opacidad 1 (completamente visible) */
+    }
+}
+
+
 .homecontainer{
     padding-top: 70px;
     text-align: center;    
@@ -121,6 +138,9 @@ a{
         padding-bottom: 10px;
     }
     h2{
+        position: relative;
+        animation: slideIn 2s ease-in-out forwards;
+        opacity: 0;
         color: white;
         font-size: 20px;
         font-family: "Helvetica";
@@ -130,6 +150,17 @@ a{
     }
 }
 
+@keyframes slideIn {
+    from {
+        left: -100%; 
+        opacity: 0; 
+    }
+
+    to {
+        left: 0; 
+        opacity: 1; 
+    }
+}
 
 .background-home{
     height: 100vh;

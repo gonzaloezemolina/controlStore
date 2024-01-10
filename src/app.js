@@ -90,10 +90,11 @@ const io = new Server(server);
 io.on("connection", async (socket) => {
   console.log("Cliente conectado", socket.id);
 
+  //Obtener products
   const productos = await productService.getProducts();
   socket.emit('productosActualizados', productos);
 
-
+  //Borrar products
   socket.on("deleteProduct", async (productId) => {
     try {
         console.log('Deleting product with ID:', productId);
@@ -103,6 +104,7 @@ io.on("connection", async (socket) => {
     } catch (error) {
         console.error('Error al eliminar producto:', error);
     }
+
 });
 
 
@@ -116,8 +118,11 @@ io.on("connection", async (socket) => {
 
 app.use((req,res,next) =>{
   logger.http(`${req.method} en ${req.url} a las ${new Date().toLocaleString()}`)
+  req.logger = logger;
   next();
 })
+
+
 
 app.get('/loggerTest', (req, res) => {
   req.logger.debug('Creando usuario');

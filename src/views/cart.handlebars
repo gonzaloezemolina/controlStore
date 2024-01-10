@@ -16,7 +16,7 @@
         <p>Precio: ${{this.product.price}}</p>
         <img class="productInCart__img" src={{this.product.thumbnail}} alt="imagen de producto">
         <p class="prodInCart">Cantidad: {{this.quantity}}</p>
-          <button class="eliminateProduct" type="submit">Eliminar del carrito</button>
+          <button class="eliminateProduct" onclick="eliminarProducto('{{this.product._id}}')" type="submit">Eliminar del carrito</button>
       </li>
       <hr>
     {{/each}}

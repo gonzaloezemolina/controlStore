@@ -4,11 +4,23 @@ import { productService } from "../services/index.js";
 const getProducts = async (req, res, next) => {
   try {
     const products = await productService.getProducts({});
-    res.status(200).json({ status: "success", payload: products });
+    res.send({ status: "success", payload: products });
   } catch (error) {
-    res.status(500).json({ status: "error", message: error});
+    res.status(500).send({ status: "error", message: "Internal Server Error" });
   }
 };
+
+const getMessage = async (req, res, next) => {
+  try {
+    // No es necesario obtener productos para la prueba, simplemente enviar el mensaje
+    res.send({ status: "success", payload: "Esto es una prueba" });
+  } catch (error) {
+    console.log("Error getting products", error);
+    res.status(500).send({ status: "error", message: "Internal Server Error" });
+  }
+};
+
+
 
 
 const getProductById = async (req, res) => {
@@ -37,6 +49,7 @@ const createProduct = async (req, res, next) => {
       title,
       description,
       code,
+      thumbnail,
       price,
       stock,
     };
@@ -95,4 +108,5 @@ export default {
   createProduct,
   updateProduct,
   deleteProduct,
+  getMessage
 };

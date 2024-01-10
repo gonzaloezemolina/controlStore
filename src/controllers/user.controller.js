@@ -38,14 +38,6 @@ const deleteUser = async (req, res) => {
 
 
 
-
-//addTicketToPurchaseHistory
-
-
-
-
-
-
 export default {
   getUsers,
   getUserById,

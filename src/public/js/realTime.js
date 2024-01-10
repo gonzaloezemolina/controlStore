@@ -2,6 +2,7 @@
 const socket = io();
 
 
+
 socket.on('productosActualizados', (productos) => {
     actualizarInterfazDeUsuario(productos);
   });
@@ -51,21 +52,9 @@ socket.on('productosActualizados', (productos) => {
 
 
 
-const updateProduct = async(productId) =>{
-  try {
-    const obtainingId = await productService.getProductById({ _id: productId })
-    .then(product => {
-      const form = createEditForm(product);
-    })
-
-  } catch (error) {
-    console.log("Error en updateProduct function", error);
-  }
-}
 
 
-
-function createEditForm(productId) {
+function createEditForm(product) {
   const form = document.createElement('form');
   form.id = 'editProductForm';
   form.className = 'EditProductForm';
@@ -75,14 +64,15 @@ function createEditForm(productId) {
       const label = document.createElement('label');
       label.setAttribute('for', field);
       label.textContent = field.charAt(0).toUpperCase() + field.slice(1) + ':';
-      label.classList.add("editLabels")
+      label.classList.add("editLabels");
 
       const input = document.createElement('input');
       input.type = (field === 'price' || field === 'stock') ? 'number' : 'text';
       input.id = field;
       input.name = field;
       input.placeholder = 'Nuevo ' + field;
-      input.classList.add("editInputs")
+      input.value = product[field]; // Cargar el valor del producto en el campo
+      input.classList.add("editInputs");
 
       form.appendChild(label);
       form.appendChild(input);
@@ -90,9 +80,18 @@ function createEditForm(productId) {
 
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';
-  submitButton.classList.add("confirmEdit")
+  submitButton.classList.add("confirmEdit");
   submitButton.textContent = 'Editar producto';
   form.appendChild(submitButton);
+
+  form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+  
+
+      const modal = document.getElementById('editProductModal');
+      modal.style.display = 'none';
+  });
 
   const modal = document.createElement('div');
   modal.id = 'editProductModal';
@@ -121,6 +120,8 @@ function createEditForm(productId) {
 
   modal.style.display = 'block';
 
+  return form;
 }
+
 
 

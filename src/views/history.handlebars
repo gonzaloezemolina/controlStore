@@ -1,4 +1,4 @@
-<h1 class="history-title">Tu historial de compra</h1>
+<h1 class="history-title">Tu historial de compra</h1> 
 
 <section class="historyContainer">
     {{#if user.purchaseHistory}}
@@ -9,10 +9,8 @@
             <p><strong>Fecha:</strong> {{this.purchase_datetime}}</p>
             <p><strong>Usuario:</strong> {{this.purchaser}}</p>
             {{#each this.products}}
-          <p><strong>Productos:</strong> {{this.title}}</p>
-          <p><strong>Cantidad:</strong> {{this.quantity}}</p>
+          <p><strong>Productos:</strong> {{this.title}} x{{this.quantity}}</p>
         {{/each}}
-            {{!-- <p><strong>Productos:</strong> {{this.products}} - {{this.products.quantity}}</p> --}}
             <p><strong>Monto:</strong> {{this.amount}}</p>
         </div>
             

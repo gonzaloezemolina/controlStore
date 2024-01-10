@@ -14,13 +14,13 @@ const colors = {
   http: 'green',
   info: 'cyan',
   warning: 'yellow',
-  error: 'red',
+  errors: 'red',
   fatal: 'magenta',
 };
 
 winston.addColors(colors);
 
-const developmentLogger = winston.createLogger({
+const getLogger = winston.createLogger({
   levels,
   format: winston.format.combine(
     winston.format.colorize(),
@@ -28,30 +28,18 @@ const developmentLogger = winston.createLogger({
   ),
   transports: [
     new winston.transports.Console({
-      level: 'debug',
-    }),
-  ],
-});
-
-const productionLogger = winston.createLogger({
-  levels,
-  format: winston.format.simple(),
-  transports: [
-    new winston.transports.Console({
-      level: 'info', 
+      level: 'info',
     }),
     new winston.transports.File({
+      level: 'warning',
       level: 'error',
+      level: 'fatal',
       filename: 'errors.log', 
     }),
   ],
 });
 
-function getLogger() {
-  if (process.env.NODE_ENV === 'prod') {
-    return productionLogger;
-  }
-  return developmentLogger;
-}
 
-export default getLogger();
+
+
+export default getLogger;

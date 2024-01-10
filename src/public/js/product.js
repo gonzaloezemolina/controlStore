@@ -1,5 +1,3 @@
-const obj = {};
-console.log("Cadena de datos antes de la solicitud:", JSON.stringify(obj));
 
 async function addToCart(id) {
   const cart = getCookie("cart");

@@ -17,16 +17,6 @@ class productsRouter extends baseRouter{
       res.send({status:"success",payload: productos})
     })
 
-    this.get("/message", ["PUBLIC"], async (req, res) => {
-      try {
-        // Llamando a la función de prueba desde el controlador
-        const prueba = await productsController.getMessage();
-        res.send(prueba);
-      } catch (error) {
-        console.log("Error getting products", error);
-        res.status(500).send({ status: "error", message: "Internal Server Error" });
-      }
-    });
 
 
   //Delete product

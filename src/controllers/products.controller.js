@@ -10,15 +10,7 @@ const getProducts = async (req, res, next) => {
   }
 };
 
-const getMessage = async (req, res, next) => {
-  try {
-    // No es necesario obtener productos para la prueba, simplemente enviar el mensaje
-    res.send({ status: "success", payload: "Esto es una prueba" });
-  } catch (error) {
-    console.log("Error getting products", error);
-    res.status(500).send({ status: "error", message: "Internal Server Error" });
-  }
-};
+
 
 
 
@@ -108,5 +100,4 @@ export default {
   createProduct,
   updateProduct,
   deleteProduct,
-  getMessage
 };
